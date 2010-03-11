@@ -8,8 +8,14 @@
 .idea/**
 .classpath
 .project
+
+# removing output files
+target
 target/**
 **/target/**/*
 **/target/**
 **/target
 *.class
+
+# We generate this, so we don't want to check it in
+host.key
