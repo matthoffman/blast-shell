@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>blast</groupId>
+    <artifactId>blastshell</artifactId>
+    <packaging>pom</packaging>
+    <version>0.1-SNAPSHOT</version>
+
+    <build>
+        <resources>
+            <resource>
+                <directory>${pom.basedir}/src/main/resources</directory>
+                <includes>
+                    <include>**/*</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>${pom.basedir}/src/main/filtered-resources</directory>
+                <filtering>true</filtering>
+                <includes>
+                    <include>**/*</include>
+                </includes>
+            </resource>
+        </resources>
+        <plugins>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+    <modules>
+        <module>core</module>
+        <module>karaf</module>
+        <module>sample</module>
+    </modules>
+
+    <properties>
+        <spring.version>2.5.6.SEC01</spring.version>
+        <sshd.version>0.3.0</sshd.version>
+        <jline.version>0.9.95-20091026.080844</jline.version>
+        <felix.gogo.version>0.2.2</felix.gogo.version>
+        <jansi.version>1.1</jansi.version>
+        <slf4j.version>1.4.3</slf4j.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>4.4</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>log4j</groupId>
+                <artifactId>log4j</artifactId>
+                <version>1.2.15</version>
+                <exclusions>
+                    <exclusion>
+                        <artifactId>jms</artifactId>
+                        <groupId>javax.jms</groupId>
+                    </exclusion>
+                    <exclusion>
+                        <artifactId>jmxtools</artifactId>
+                        <groupId>com.sun.jdmk</groupId>
+                    </exclusion>
+                    <exclusion>
+                        <artifactId>jmxri</artifactId>
+                        <groupId>com.sun.jmx</groupId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>${slf4j.version}</version>
+            </dependency>
+
+            <!-- locally, we use Log4J, but others don't need to -->
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-log4j12</artifactId>
+                <version>${slf4j.version}</version>
+                <optional>true</optional>
+            </dependency>
+
+            <!-- SPRING -->
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-beans</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-core</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-context</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-test</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
+
+
+            <dependency>
+                <groupId>org.apache.sshd</groupId>
+                <artifactId>sshd-core</artifactId>
+                <version>${sshd.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>jline</groupId>
+                <artifactId>jline</artifactId>
+                <version>${jline.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.fusesource.jansi</groupId>
+                <artifactId>jansi</artifactId>
+                <version>${jansi.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.felix.gogo</groupId>
+                <artifactId>org.apache.felix.gogo.commands</artifactId>
+                <version>${felix.gogo.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+</project>                                     

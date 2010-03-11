@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>blastshell</artifactId>
+        <groupId>blast</groupId>
+        <version>0.1-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>sample</artifactId>
+    <build>
+        <plugins>
+            <plugin>
+               <groupId>org.codehaus.mojo</groupId>
+               <artifactId>exec-maven-plugin</artifactId>
+               <version>1.1.1</version>
+               <executions>
+                   <execution>
+                       <goals>
+                           <goal>exec</goal>
+                       </goals>
+                       <phase />
+                   </execution>
+               </executions>
+               <configuration>
+                   <executable>java</executable>
+                   <arguments>
+                       <argument>-classpath</argument>
+                       <classpath />
+                       <argument>blast.shell.App</argument>
+                   </arguments>
+                   <systemProperties>
+                       <systemProperty>
+                           <key>QLOGIC_HOME</key>
+                           <value>${target}</value>
+                       </systemProperty>
+                   </systemProperties>
+               </configuration>
+           </plugin>
+        </plugins>
+    </build>
+
+    <dependencies>
+        <dependency>
+            <groupId>blast</groupId>
+            <artifactId>blastshell-karaf-commands</artifactId>
+            <version>0.1-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>blast</groupId>
+            <artifactId>blastshell-karaf-ssh</artifactId>
+            <version>0.1-SNAPSHOT</version>
+        </dependency>
+
+
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <scope>test</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>log4j</groupId>
+                <artifactId>log4j</artifactId>
+                <exclusions>
+                    <exclusion>
+                        <artifactId>jms</artifactId>
+                        <groupId>javax.jms</groupId>
+                    </exclusion>
+                    <exclusion>
+                        <artifactId>jmxtools</artifactId>
+                        <groupId>com.sun.jdmk</groupId>
+                    </exclusion>
+                    <exclusion>
+                        <artifactId>jmxri</artifactId>
+                        <groupId>com.sun.jmx</groupId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+            </dependency>
+
+            <!-- locally, we use Log4J, but others don't need to -->
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-log4j12</artifactId>
+                <optional>true</optional>
+            </dependency>
+
+            <!-- SPRING -->
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-beans</artifactId>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-core</artifactId>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-context</artifactId>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-test</artifactId>
+            </dependency>
+
+            <dependency>
+                <groupId>jline</groupId>
+                <artifactId>jline</artifactId>
+            </dependency>
+
+            <dependency>
+                <groupId>org.fusesource.jansi</groupId>
+                <artifactId>jansi</artifactId>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.felix.gogo</groupId>
+                <artifactId>org.apache.felix.gogo.commands</artifactId>
+            </dependency>
+    </dependencies>
+        
+</project>

@@ -1,0 +1,11 @@
+# Silly Apple
+.DS_Store
+
+# I don't like checking in my IDE files
+*.iml
+*.ipr
+.idea/
+.idea/**
+.classpath
+.project
+target/**
