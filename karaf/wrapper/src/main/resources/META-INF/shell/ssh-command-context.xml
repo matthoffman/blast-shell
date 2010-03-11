@@ -46,6 +46,7 @@
         <property name="path" value="${hostKey}"/>
     </bean>
 
+    <!-- use this if you want to use JAAS --> 
     <bean id="passwordAuthenticator" class="org.apache.sshd.server.jaas.JaasPasswordAuthenticator">
         <property name="domain" value="${sshRealm}"/>
     </bean>
