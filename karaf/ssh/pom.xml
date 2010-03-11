@@ -10,12 +10,24 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>shell-karaf-ssh</artifactId>
-    
-   <dependencies>
+
+    <dependencies>
         <dependency>
             <groupId>blast</groupId>
             <artifactId>shell-core</artifactId>
             <version>${parent.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>blast</groupId>
+            <artifactId>shell-karaf-wrapper</artifactId>
+            <version>${parent.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.felix.karaf.shell</groupId>
+            <artifactId>org.apache.felix.karaf.shell.ssh</artifactId>
+            <version>1.5.0-SNAPSHOT</version>
         </dependency>
 
         <dependency>
@@ -64,6 +76,6 @@
             <groupId>org.apache.felix.gogo</groupId>
             <artifactId>org.apache.felix.gogo.commands</artifactId>
         </dependency>
-        </dependencies>
+    </dependencies>
 
 </project>
