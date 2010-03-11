@@ -3,7 +3,7 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>blastshell</artifactId>
+        <artifactId>shell</artifactId>
         <groupId>blast</groupId>
         <version>0.1-SNAPSHOT</version>
     </parent>
@@ -57,13 +57,13 @@
     <dependencies>
         <dependency>
             <groupId>blast</groupId>
-            <artifactId>blastshell-karaf-commands</artifactId>
+            <artifactId>shell-karaf-commands</artifactId>
             <version>${parent.version}</version>
         </dependency>
 
         <dependency>
             <groupId>blast</groupId>
-            <artifactId>blastshell-karaf-ssh</artifactId>
+            <artifactId>shell-karaf-wrapper</artifactId>
             <version>${parent.version}</version>
         </dependency>
 
