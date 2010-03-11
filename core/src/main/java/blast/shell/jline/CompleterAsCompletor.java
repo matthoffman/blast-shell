@@ -20,8 +20,8 @@ package blast.shell.jline;
 
 import java.util.List;
 
-import jline.Completor;
 import blast.shell.Completer;
+import jline.Completor;
 
 public class CompleterAsCompletor implements Completor {
 

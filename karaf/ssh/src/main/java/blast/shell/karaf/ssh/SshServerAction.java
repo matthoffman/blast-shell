@@ -19,10 +19,10 @@
 
 package blast.shell.karaf.ssh;
 
-import org.apache.felix.gogo.commands.Command;
-import org.apache.felix.gogo.commands.Option;
 import blast.shell.CommandSupport;
 import org.apache.sshd.SshServer;
+import org.apache.felix.gogo.commands.Option;
+import org.apache.felix.gogo.commands.Command;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,13 +42,14 @@ public class SshServerAction extends CommandSupport
     @Option(name="-b", aliases={ "--background"}, description = "The service will run in the background (Default: true)", required = false, multiValued = false)
     private boolean background = true;
 
-    SshServer server; 
-    
+
+    SshServer server;
+
     public void setSshServer(SshServer sshServer) {
         this.server = sshServer;
     }
 
-    public Object doExecute() throws Exception {
+    protected Object doExecute() throws Exception {
         log.debug("Created server: {}", server);
 
         server.setPort(port);

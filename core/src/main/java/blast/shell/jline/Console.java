@@ -36,13 +36,15 @@ import java.util.concurrent.Callable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import blast.shell.CloseShellException;
+import blast.shell.Completer;
+import blast.shell.completer.AggregateCompleter;
+import blast.shell.completer.SessionScopeCompleter;
 import jline.AnsiWindowsTerminal;
 import jline.ConsoleReader;
 import jline.Terminal;
 import jline.UnsupportedTerminal;
-import blast.shell.Completer;
-import blast.shell.completer.AggregateCompleter;
-import blast.shell.completer.SessionScopeCompleter;
+import org.fusesource.jansi.Ansi;
 import org.osgi.service.command.CommandProcessor;
 import org.osgi.service.command.CommandSession;
 import org.osgi.service.command.Converter;
@@ -56,6 +58,7 @@ public class Console implements Runnable
     public static final String PROMPT = "PROMPT";
     public static final String DEFAULT_PROMPT = "\u001B[1m${USER}\u001B[0m@${APPLICATION}> ";
     public static final String PRINT_STACK_TRACES = "blast.printStackTraces";
+    public static final String LAST_EXCEPTION = "blast.lastException";
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Console.class);
 
@@ -71,7 +74,6 @@ public class Console implements Runnable
     private InputStream in;
     private PrintStream out;
     private PrintStream err;
-    private Callable<Boolean> printStackTraces;
 
     public Console(CommandProcessor processor,
                    InputStream in,
@@ -79,8 +81,7 @@ public class Console implements Runnable
                    PrintStream err,
                    Terminal term,
                    Completer completer,
-                   Runnable closeCallback,
-                   Callable<Boolean> printStackTraces) throws Exception
+                   Runnable closeCallback) throws Exception
     {
         this.in = in;
         this.out = out;
@@ -91,7 +92,6 @@ public class Console implements Runnable
         this.session = processor.createSession(this.consoleInput, this.out, this.err);
         this.session.put("SCOPE", "shell:osgi:*");
         this.closeCallback = closeCallback;
-        this.printStackTraces = printStackTraces;
 
         reader = new ConsoleReader(this.consoleInput,
                                    new PrintWriter(this.out),
@@ -101,6 +101,7 @@ public class Console implements Runnable
         File file = new File(System.getProperty("user.home"), ".blast/shell.history");
         file.getParentFile().mkdirs();
         reader.getHistory().setHistoryFile(file);
+        session.put(".jline.history", reader.getHistory());
         if (completer != null) {
             reader.addCompletor(
                 new CompleterAsCompletor(
@@ -182,15 +183,24 @@ public class Console implements Runnable
                 //System.err.println("^C");
                 // TODO: interrupt current thread
             }
+            catch (CloseShellException e)
+            {
+                break;
+            }
             catch (Throwable t)
             {
                 try {
-                    if ( printStackTraces.call()) {
+                    LOGGER.info("Exception caught while executing command", t);
+                    session.put(LAST_EXCEPTION, t);
+                    session.getConsole().print(Ansi.ansi().fg(Ansi.Color.RED).toString());
+                    if ( isPrintStackTraces()) {
                         t.printStackTrace(session.getConsole());
                     }
                     else {
-                        session.getConsole().println(t.getMessage());
+                        session.getConsole().println("Error executing command: "
+                                + (t.getMessage() != null ? t.getMessage() : t.getClass().getName()));
                     }
+                    session.getConsole().print(Ansi.ansi().fg(Ansi.Color.DEFAULT).toString());
                 } catch (Exception ignore) {
                         // ignore
                 }
@@ -201,6 +211,20 @@ public class Console implements Runnable
         {
             closeCallback.run();
         }
+    }
+
+    protected boolean isPrintStackTraces() {
+        Object s = session.get(PRINT_STACK_TRACES);
+        if (s == null) {
+            s = System.getProperty(PRINT_STACK_TRACES);
+        }
+        if (s == null) {
+            return false;
+        }
+        if (s instanceof Boolean) {
+            return (Boolean) s;
+        }
+        return Boolean.parseBoolean(s.toString());
     }
 
     protected void welcome() {

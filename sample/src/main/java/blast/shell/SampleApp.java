@@ -21,11 +21,6 @@ import java.util.ArrayList;
 public class SampleApp 
 {
 
-    public ApplicationContext start() {
-        // create the Spring application context
-        return new ClassPathXmlApplicationContext("classpath:META-INF/shell/*-context.xml");
-    }
-
     public static void main(String[] args) {
 
         try {
@@ -40,6 +35,7 @@ public class SampleApp
         App app = new App();
         try {
             ApplicationContext context = app.start();
+
             ConsoleFactory factory = (ConsoleFactory) context.getBean("consoleFactory");
             CommandShellImpl commandProcessor = (CommandShellImpl) context.getBean("commandProcessor");
             CommandRegistry registry = (CommandRegistry) context.getBean("commandCompleter");

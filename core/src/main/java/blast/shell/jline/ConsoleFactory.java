@@ -35,7 +35,7 @@ import jline.Terminal;
 
 public class ConsoleFactory {
     private static final Logger log = Logger.getLogger(ConsoleFactory.class);
-    
+
     private CommandProcessor commandProcessor;
     private List<Completer> completers;
     private Terminal terminal;
@@ -80,21 +80,13 @@ public class ConsoleFactory {
                     }
                 }
             };
-            final Callable<Boolean> printStackTraces = new Callable<Boolean>() {
-                public Boolean call() {
-                    // TODO: ? what is this supposed to do? PRINT_STACK_TRACES...replace with Log4j.isDebugEnabled()?
-                    // return Boolean.valueOf(bundleContext.getProperty(Console.PRINT_STACK_TRACES));
-                    return Logger.getLogger(Console.class).isDebugEnabled();
-                }
-            };
             this.console = new Console(commandProcessor,
                                        in,
                                        wrap(out),
                                        wrap(err),
                                        terminal,
                                        new AggregateCompleter(completers),
-                                       callback,
-                                       printStackTraces);
+                                       callback);
             CommandSession session = console.getSession();
             session.put("USER", "karaf");
             session.put("APPLICATION", System.getProperty("karaf.name", "root"));

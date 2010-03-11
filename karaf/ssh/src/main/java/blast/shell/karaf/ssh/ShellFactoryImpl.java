@@ -20,12 +20,14 @@
 package blast.shell.karaf.ssh;
 
 import java.io.Closeable;
+import java.io.FilterOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.concurrent.Callable;
 
 import blast.shell.Completer;
@@ -90,23 +92,17 @@ public class ShellFactoryImpl implements Factory<Command>
 
         public void start(final Environment env) throws IOException {
             try {
-                final Callable<Boolean> printStackTraces = new Callable<Boolean>() {
-                    public Boolean call() {
-                        return Boolean.valueOf(System.getProperty(Console.PRINT_STACK_TRACES));
-                    }
-                };
                 Console console = new Console(commandProcessor,
                                               in,
-                                              new PrintStream(out, true),
-                                              new PrintStream(err, true),
+                                              new PrintStream(new LfToCrLfFilterOutputStream(out), true),
+                                              new PrintStream(new LfToCrLfFilterOutputStream(err), true),
                                               new SshTerminal(env),
                                               new AggregateCompleter(completers),
                                               new Runnable() {
                                                   public void run() {
                                                       destroy();
                                                   }
-                                              },
-                                              printStackTraces);
+                                              });
                 CommandSession session = console.getSession();
                 session.put("APPLICATION", System.getProperty("karaf.name", "root"));
                 for (Map.Entry<String,String> e : env.getEnv().entrySet()) {
@@ -137,4 +133,28 @@ public class ShellFactoryImpl implements Factory<Command>
             }
         }
     }
+
+    // TODO: remove this class when sshd use lf->crlf conversion by default
+    public class LfToCrLfFilterOutputStream extends FilterOutputStream {
+
+        private boolean lastWasCr;
+
+        public LfToCrLfFilterOutputStream(OutputStream out) {
+            super(out);
+        }
+
+        @Override
+        public void write(int b) throws IOException {
+            if (!lastWasCr && b == '\n') {
+                out.write('\r');
+                out.write('\n');
+            } else {
+                out.write(b);
+            }
+            lastWasCr = b == '\r';
+        }
+
+    }
+
+
 }
