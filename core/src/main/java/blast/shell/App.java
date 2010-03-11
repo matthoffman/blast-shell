@@ -23,7 +23,7 @@ public class App
 
     public ApplicationContext start() {
         // create the Spring application context
-        return new ClassPathXmlApplicationContext("classpath:META-INF/shell/*-context.xml");
+        return new ClassPathXmlApplicationContext("classpath*:META-INF/shell/*-context.xml");
     }
 
     public static void main(String[] args) {

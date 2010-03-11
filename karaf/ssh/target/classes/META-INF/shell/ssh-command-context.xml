@@ -6,8 +6,6 @@
 
     <cm:property-placeholder location="classpath:META-INF/shell/ssh.properties" />
 
-
-
     <bean name="sshCommand" class="blast.shell.karaf.ssh.SshAction">
         <property name="sshClient" ref="sshClient"/>
     </bean>

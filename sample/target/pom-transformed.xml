@@ -3,7 +3,7 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>blastshell</artifactId>
+        <artifactId>shell</artifactId>
         <groupId>blast</groupId>
         <version>0.1-SNAPSHOT</version>
     </parent>
@@ -11,7 +11,8 @@
 
     <artifactId>sample</artifactId>
     <build>
-        <plugins>
+      <plugins>                      
+        <!--
             <plugin>
                <groupId>org.codehaus.mojo</groupId>
                <artifactId>exec-maven-plugin</artifactId>
@@ -31,27 +32,38 @@
                        <classpath />
                        <argument>blast.shell.App</argument>
                    </arguments>
-                   <systemProperties>
-                       <systemProperty>
-                           <key>QLOGIC_HOME</key>
-                           <value>${target}</value>
-                       </systemProperty>
-                   </systemProperties>
                </configuration>
-           </plugin>
+             </plugin>
+             -->
+            <plugin>
+               <groupId>org.codehaus.mojo</groupId>
+               <artifactId>exec-maven-plugin</artifactId>
+               <version>1.1.1</version>
+               <executions>
+                   <execution>
+                       <goals>
+                           <goal>java</goal>
+                       </goals>
+                       <phase />
+                   </execution>
+               </executions>
+               <configuration>
+                   <mainClass>blast.shell.App</mainClass>
+               </configuration>
+             </plugin>
         </plugins>
     </build>
 
     <dependencies>
         <dependency>
             <groupId>blast</groupId>
-            <artifactId>blastshell-karaf-commands</artifactId>
+            <artifactId>shell-karaf-commands</artifactId>
             <version>0.1-SNAPSHOT</version>
         </dependency>
 
         <dependency>
             <groupId>blast</groupId>
-            <artifactId>blastshell-karaf-ssh</artifactId>
+            <artifactId>shell-karaf-wrapper</artifactId>
             <version>0.1-SNAPSHOT</version>
         </dependency>
 

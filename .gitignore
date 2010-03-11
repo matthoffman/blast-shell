@@ -8,4 +8,6 @@
 .idea/**
 .classpath
 .project
-target/**
+
+# removing output files
+target

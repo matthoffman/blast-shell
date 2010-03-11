@@ -19,6 +19,12 @@ public class SpringBackedBlueprintContainer implements org.osgi.service.blueprin
 
     private ApplicationContext applicationContext;
 
+    public SpringBackedBlueprintContainer() {}
+
+    public SpringBackedBlueprintContainer(ApplicationContext applicationContext) {
+        this.applicationContext = applicationContext;
+    }
+
     @Override
     public Set getComponentIds() {
         String[] names = applicationContext.getBeanDefinitionNames();

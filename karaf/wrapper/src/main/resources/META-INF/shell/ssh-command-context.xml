@@ -4,10 +4,10 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans-2.5.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-    
-
     <cm:property-placeholder location="classpath:META-INF/shell/ssh.properties" />
 
+    <bean name ="blueprintContainerAwarePostProcessor" class="blast.shell.osgi.BlueprintContainerAwarePostProcessor"/>
+    
     <bean name="sshCommand" class="org.apache.felix.karaf.shell.ssh.SshAction">
         <property name="sshClientId" value="sshClient"/>
     </bean>

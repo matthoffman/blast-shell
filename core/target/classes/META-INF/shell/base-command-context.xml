@@ -6,9 +6,6 @@
 
     <bean name="threadIo" class="org.apache.felix.gogo.runtime.threadio.ThreadIOImpl"/>
 
-    <cm:component-scan base-package="blast.shell">
-        <cm:include-filter type="annotation" expression="org.apache.felix.gogo.commands.Command"/>
-    </cm:component-scan>
 
     <bean name="commandProcessor" class="org.apache.felix.gogo.runtime.shell.CommandShellImpl">
         <property name="threadio" ref="threadIo"/>
