@@ -1,9 +1,11 @@
 Purpose
 -------
 
-This is a project to adapt the [Apache Karaf][karaf] [shell][karaf-shell] to non-OSGi, Spring-based projects.  It provides, in brief:
+This is a project to adapt the [Apache Karaf][karaf] [shell][karaf-shell] to non-OSGi, Spring-based projects.  
+It is designed to be easily integrated into existing projects, providing either SSH access to a running application, 
+or a direct console.
 
-Very little of this is original work; it's mainly a wrapper around Karaf and JLine. 
+Very little of this project is original work; it's mainly a wrapper around Karaf and Jline. 
 
 Features
 --------
@@ -27,6 +29,10 @@ Assuming you have Maven 2 and Java 1.6 or higher installed, go first to the root
 
 I'm not aware of anything here that requires Java 1.6, so you're welcome to experiment with requiring something less.
 
+Integrating the Shell
+--------------------
+
+(TODO)
 
 
 Extensibility
