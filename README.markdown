@@ -15,6 +15,7 @@ Features
 * Built-in commands, including grep, cat, each, if, exec, more, and sort
 * Pretty colors
 
+
 [karaf]: http://felix.apache.org/site/apache-felix-karaf.html
 [karaf-shell]: http://felix.apache.org/site/41-console-and-commands.html
 
