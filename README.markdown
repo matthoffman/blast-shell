@@ -3,7 +3,7 @@ Purpose
 
 This is a project to adapt the [Apache Karaf][karaf] [shell][karaf-shell] to non-OSGi, Spring-based projects.  
 It is designed to be easily integrated into existing projects, providing either SSH access to a running application, 
-or a direct console.
+or a direct console. It's certainly a work in progress.
 
 Very little of this project is original work; it's mainly a wrapper around Karaf and Jline. 
 
