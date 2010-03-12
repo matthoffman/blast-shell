@@ -33,6 +33,7 @@ import java.util.concurrent.Callable;
 import blast.shell.Completer;
 import blast.shell.completer.AggregateCompleter;
 import blast.shell.jline.Console;
+import org.apache.felix.karaf.shell.ssh.SshTerminal;
 import org.apache.sshd.common.Factory;
 import org.apache.sshd.server.Command;
 import org.apache.sshd.server.Environment;
