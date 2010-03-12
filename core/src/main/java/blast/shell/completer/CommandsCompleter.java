@@ -77,7 +77,8 @@ public class CommandsCompleter implements Completer, BeanFactoryAware {
 //        {
 //            if (function.getClass().isArray())
 //            {
-//                for (Object f : ((Object[]) function))
+
+    //                for (Object f : ((Object[]) function))
 //                {
 //                    names.add(scope + ":" + f.toString());
 //                }
@@ -93,11 +94,12 @@ public class CommandsCompleter implements Completer, BeanFactoryAware {
 //
     @Override
     public int complete(String buffer, int cursor, List<String> candidates) {
-        int res =  new AggregateCompleter(completers.values()).complete(buffer, cursor, candidates);
+        int res = new AggregateCompleter(completers.values()).complete(buffer, cursor, candidates);
         Collections.sort(candidates);
         return res;
     }
-//
+
+    //
     @Override
     public void setBeanFactory(BeanFactory factory) throws BeansException {
         this.beanFactory = (ListableBeanFactory) factory;

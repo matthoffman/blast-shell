@@ -33,8 +33,7 @@ import java.io.IOException;
  * @version $Rev: 705608 $ $Date: 2008-10-17 15:28:45 +0200 (Fri, 17 Oct 2008) $
  */
 public class StreamPumper
-    implements Runnable
-{
+        implements Runnable {
     private InputStream in;
 
     private OutputStream out;
@@ -56,10 +55,10 @@ public class StreamPumper
     /**
      * Create a new stream pumper.
      *
-     * @param in                    Input stream to read data from
-     * @param out                   Output stream to write data to.
-     * @param closeWhenExhausted    If true, the output stream will be closed when
-     *                              the input is exhausted.
+     * @param in                 Input stream to read data from
+     * @param out                Output stream to write data to.
+     * @param closeWhenExhausted If true, the output stream will be closed when
+     *                           the input is exhausted.
      */
     public StreamPumper(final InputStream in, final OutputStream out, final boolean closeWhenExhausted) {
         assert in != null;
@@ -73,8 +72,8 @@ public class StreamPumper
     /**
      * Create a new stream pumper.
      *
-     * @param in    Input stream to read data from
-     * @param out   Output stream to write data to.
+     * @param in  Input stream to read data from
+     * @param out Output stream to write data to.
      */
     public StreamPumper(final InputStream in, final OutputStream out) {
         this(in, out, false);
@@ -83,7 +82,7 @@ public class StreamPumper
     /**
      * Set whether data should be flushed through to the output stream.
      *
-     * @param autoflush     If true, push through data; if false, let it be buffered
+     * @param autoflush If true, push through data; if false, let it be buffered
      */
     public void setAutoflush(boolean autoflush) {
         this.autoflush = autoflush;
@@ -91,7 +90,7 @@ public class StreamPumper
 
     /**
      * Copies data from the input stream to the output stream.
-     *
+     * <p/>
      * Terminates as soon as the input stream is closed or an error occurs.
      */
     public void run() {
@@ -108,7 +107,7 @@ public class StreamPumper
             do {
                 while (in.available() > 0 && !finish) {
                     length = in.read(buf);
-                    if (length < 1 ) {
+                    if (length < 1) {
                         break;
                     }
                     out.write(buf, 0, length);
@@ -129,7 +128,8 @@ public class StreamPumper
             if (closeWhenExhausted) {
                 try {
                     out.close();
-                } catch (IOException e) { }
+                } catch (IOException e) {
+                }
             }
             finished = true;
 
@@ -193,7 +193,7 @@ public class StreamPumper
 
     /**
      * Stop the pumper as soon as possible.
-     *
+     * <p/>
      * Note that it may continue to block on the input stream
      * but it will really stop the thread as soon as it gets EOF
      * or any byte, and it will be marked as finished.

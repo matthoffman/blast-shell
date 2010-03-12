@@ -13,19 +13,19 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Serves as a registry for commands -- it detects when command objects are loaded by Spring.
- * Also serves as a completer for command names. 
+ * Also serves as a completer for command names.
  */
 public class CommandRegistry implements BeanPostProcessor, Completer {
     CommandShellImpl commandShell;
 
-    Map<String,Action> commandRegistry = new HashMap<String,Action>();
+    Map<String, Action> commandRegistry = new HashMap<String, Action>();
 
     private final Map<String, Completer> completers = new ConcurrentHashMap<String, Completer>();
 
     @Override
     public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
-        if (bean instanceof Action) { 
-            commandRegistry.put(beanName,(Action) bean);
+        if (bean instanceof Action) {
+            commandRegistry.put(beanName, (Action) bean);
         }
         String command = getName(bean);
         if (command != null) {
@@ -58,7 +58,7 @@ public class CommandRegistry implements BeanPostProcessor, Completer {
 
     @Override
     public int complete(String buffer, int cursor, List<String> candidates) {
-        int res =  new AggregateCompleter(completers.values()).complete(buffer, cursor, candidates);
+        int res = new AggregateCompleter(completers.values()).complete(buffer, cursor, candidates);
         Collections.sort(candidates);
         return res;
     }
@@ -69,9 +69,9 @@ public class CommandRegistry implements BeanPostProcessor, Completer {
             Command command = bean.getClass().getAnnotation(Command.class);
             String scope = command.scope();
             String function = command.name();
-            if(scope != null && function != null) {
+            if (scope != null && function != null) {
                 if (bean instanceof Action) {
-                    commandShell.addCommand(scope,  new SimpleSpringBeanCommand((Action) bean), function);
+                    commandShell.addCommand(scope, new SimpleSpringBeanCommand((Action) bean), function);
                 } else {
                     commandShell.addCommand(scope, bean, function);
                 }

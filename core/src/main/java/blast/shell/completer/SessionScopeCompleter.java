@@ -21,6 +21,7 @@ package blast.shell.completer;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+
 import blast.shell.Completer;
 import org.osgi.service.command.CommandSession;
 
@@ -29,85 +30,73 @@ import org.osgi.service.command.CommandSession;
  *
  * @version $Rev: $ $Date: $
  */
-public class SessionScopeCompleter implements Completer
-{
+public class SessionScopeCompleter implements Completer {
 
     private final CommandSession session;
     private final Completer completer;
 
-    public SessionScopeCompleter( final CommandSession session,
-                                  final Completer completer )
-    {
+    public SessionScopeCompleter(final CommandSession session,
+                                 final Completer completer) {
         this.session = session;
         this.completer = completer;
     }
 
-    public int complete( String buffer, int cursor, List<String> candidates )
-    {
+    public int complete(String buffer, int cursor, List<String> candidates) {
         // buffer could be null
         assert candidates != null;
 
-        try
-        {
+        try {
             final List<Completion> completions = new ArrayList<Completion>();
 
-            final String scope = (String) session.get( "SCOPE" );
-            if( scope != null )
-            {
-                final String[] segments = scope.split( ":" );
+            final String scope = (String) session.get("SCOPE");
+            if (scope != null) {
+                final String[] segments = scope.split(":");
 
                 // Run completer for each segment, saving its completion results
                 int max = -1;
-                for( String segment : segments )
-                {
-                    Completion completion = new Completion( candidates );
-                    completion.complete( completer, segment + ":" + buffer, ( segment + ":" ).length() + cursor );
+                for (String segment : segments) {
+                    Completion completion = new Completion(candidates);
+                    completion.complete(completer, segment + ":" + buffer, (segment + ":").length() + cursor);
 
                     // Compute the max cursor position
-                    max = Math.max( max, completion.cursor );
+                    max = Math.max(max, completion.cursor);
 
-                    completions.add( completion );
+                    completions.add(completion);
                 }
 
                 // Append candidates from completions which have the same cursor position as max
-                for( Completion completion : completions )
-                {
-                    if( completion.cursor == max )
-                    {
+                for (Completion completion : completions) {
+                    if (completion.cursor == max) {
                         // noinspection unchecked
-                        candidates.addAll( completion.candidates );
+                        candidates.addAll(completion.candidates);
                     }
                 }
 
                 return max;
             }
         }
-        catch( Exception ignore )
-        {
+        catch (Exception ignore) {
         }
         return -1;
     }
 
-    private class Completion
-    {
+    private class Completion {
 
         public final List<String> candidates;
 
         public int cursor;
 
-        public Completion( final List candidates )
-        {
+        public Completion(final List candidates) {
             assert candidates != null;
 
             // noinspection unchecked
-            this.candidates = new LinkedList<String>( candidates );
+            this.candidates = new LinkedList<String>(candidates);
         }
 
-        public void complete( final Completer completer, final String buffer, final int cursor )
-        {
+        public void complete(final Completer completer, final String buffer, final int cursor) {
             assert completer != null;
 
-            this.cursor = completer.complete( buffer, cursor, candidates );
+            this.cursor = completer.complete(buffer, cursor, candidates);
         }
     }
 

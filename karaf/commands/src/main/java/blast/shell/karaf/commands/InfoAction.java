@@ -63,7 +63,8 @@ public class InfoAction extends CommandSupport {
         printValue("Uptime", maxNameLen, printDuration(runtime.getUptime()));
         try {
             printValue("Process CPU time", maxNameLen, printDuration(getSunOsValueAsLong(os, "getProcessCpuTime") / 1000000));
-        } catch (Throwable t) {}
+        } catch (Throwable t) {
+        }
         printValue("Total compile time", maxNameLen, printDuration(ManagementFactory.getCompilationMXBean().getTotalCompilationTime()));
 
         System.out.println("Threads");
@@ -97,7 +98,8 @@ public class InfoAction extends CommandSupport {
             printValue("Committed virtual memory", maxNameLen, printSizeInKb(getSunOsValueAsLong(os, "getCommittedVirtualMemorySize")));
             printValue("Total swap space", maxNameLen, printSizeInKb(getSunOsValueAsLong(os, "getTotalSwapSpaceSize")));
             printValue("Free swap space", maxNameLen, printSizeInKb(getSunOsValueAsLong(os, "getFreeSwapSpaceSize")));
-        } catch (Throwable t) {}
+        } catch (Throwable t) {
+        }
 
         return null;
     }
@@ -152,8 +154,8 @@ public class InfoAction extends CommandSupport {
 
     void printValue(String name, int pad, String value) {
         System.out.println(Ansi.ansi().a("  ")
-                                .a(Ansi.Attribute.INTENSITY_BOLD).a(name).a(spaces(pad - name.length())).a(Ansi.Attribute.RESET)
-                                .a("   ").a(value).toString());
+                .a(Ansi.Attribute.INTENSITY_BOLD).a(name).a(spaces(pad - name.length())).a(Ansi.Attribute.RESET)
+                .a("   ").a(value).toString());
     }
 
     String spaces(int nb) {

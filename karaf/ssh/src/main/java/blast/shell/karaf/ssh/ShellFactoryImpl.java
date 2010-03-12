@@ -45,8 +45,7 @@ import org.osgi.service.command.CommandSession;
  *
  * @version $Rev: 731517 $ $Date: 2009-01-05 11:25:19 +0100 (Mon, 05 Jan 2009) $
  */
-public class ShellFactoryImpl implements Factory<Command>
-{
+public class ShellFactoryImpl implements Factory<Command> {
     private CommandProcessor commandProcessor;
     private List<Completer> completers;
 
@@ -62,8 +61,7 @@ public class ShellFactoryImpl implements Factory<Command>
         return new ShellImpl();
     }
 
-    public class ShellImpl implements Command
-    {
+    public class ShellImpl implements Command {
         private InputStream in;
 
         private OutputStream out;
@@ -93,19 +91,19 @@ public class ShellFactoryImpl implements Factory<Command>
         public void start(final Environment env) throws IOException {
             try {
                 Console console = new Console(commandProcessor,
-                                              in,
-                                              new PrintStream(new LfToCrLfFilterOutputStream(out), true),
-                                              new PrintStream(new LfToCrLfFilterOutputStream(err), true),
-                                              new SshTerminal(env),
-                                              new AggregateCompleter(completers),
-                                              new Runnable() {
-                                                  public void run() {
-                                                      destroy();
-                                                  }
-                                              });
+                        in,
+                        new PrintStream(new LfToCrLfFilterOutputStream(out), true),
+                        new PrintStream(new LfToCrLfFilterOutputStream(err), true),
+                        new SshTerminal(env),
+                        new AggregateCompleter(completers),
+                        new Runnable() {
+                            public void run() {
+                                destroy();
+                            }
+                        });
                 CommandSession session = console.getSession();
                 session.put("APPLICATION", System.getProperty("karaf.name", "root"));
-                for (Map.Entry<String,String> e : env.getEnv().entrySet()) {
+                for (Map.Entry<String, String> e : env.getEnv().entrySet()) {
                     session.put(e.getKey(), e.getValue());
                 }
                 new Thread(console).start();
@@ -135,6 +133,7 @@ public class ShellFactoryImpl implements Factory<Command>
     }
 
     // TODO: remove this class when sshd use lf->crlf conversion by default
+
     public class LfToCrLfFilterOutputStream extends FilterOutputStream {
 
         private boolean lastWasCr;

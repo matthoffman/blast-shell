@@ -22,7 +22,7 @@ import java.util.List;
 public class SpringBackedBundleContext implements BundleContext, ApplicationContextAware {
 
     private static final Logger log = Logger.getLogger(SpringBackedBundleContext.class);
-    
+
     ApplicationContext applicationContext;
 
     @Override
@@ -41,7 +41,7 @@ public class SpringBackedBundleContext implements BundleContext, ApplicationCont
                 }
             }
         } catch (ClassNotFoundException e) {
-            log.error("Error loading class name "+ clazz+": ", e);
+            log.error("Error loading class name " + clazz + ": ", e);
         }
         return list.toArray(new ServiceReference[list.size()]);
     }
@@ -50,18 +50,18 @@ public class SpringBackedBundleContext implements BundleContext, ApplicationCont
     public ServiceReference getServiceReference(String clazz) {
         try {
             ServiceReference[] refs = getAllServiceReferences(clazz, null);
-            if (refs != null && refs.length > 0){
+            if (refs != null && refs.length > 0) {
                 return refs[0];
-            }
-            else return null;
+            } else return null;
         } catch (InvalidSyntaxException e) {
-            log.error("Error getting reference for class "+ clazz+": ", e);
+            log.error("Error getting reference for class " + clazz + ": ", e);
             return null;
         }
     }
 
     /**
      * We care about this one
+     *
      * @param reference
      * @return
      */
@@ -72,6 +72,7 @@ public class SpringBackedBundleContext implements BundleContext, ApplicationCont
 
     /**
      * We care about this one
+     *
      * @param reference
      * @return
      */
@@ -81,7 +82,6 @@ public class SpringBackedBundleContext implements BundleContext, ApplicationCont
     }
 
 
-    
     @Override
     public String getProperty(String key) {
         throw new UnsupportedOperationException("Not implemented");

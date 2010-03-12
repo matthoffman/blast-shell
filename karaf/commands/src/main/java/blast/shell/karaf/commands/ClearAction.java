@@ -25,12 +25,12 @@ import blast.shell.CommandSupport;
 @Command(scope = "shell", name = "clear", description = "Clears the console buffer")
 public class ClearAction extends CommandSupport {
 
-	protected Object doExecute() throws Exception {
-		System.out.print("\33[2J");
-		System.out.flush();
-		System.out.print("\33[1;1H");
-		System.out.flush();
-		return null;
-	}	
+    protected Object doExecute() throws Exception {
+        System.out.print("\33[2J");
+        System.out.flush();
+        System.out.print("\33[1;1H");
+        System.out.flush();
+        return null;
+    }
 
 }

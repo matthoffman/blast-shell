@@ -10,7 +10,7 @@ import org.springframework.context.ApplicationContextAware;
  * A somewhat hackish wrapper that looks for beans that implement BlueprintContainerAware and hands them a wrapped
  * Spring ApplicationContext instead.
  * This will work only if all they're really trying to do is look up services, in which case they'll just be looking up
- * Spring beans instead. 
+ * Spring beans instead.
  */
 public class BlueprintContainerAwarePostProcessor implements BeanPostProcessor, ApplicationContextAware {
     private ApplicationContext applicationContext;
@@ -18,7 +18,7 @@ public class BlueprintContainerAwarePostProcessor implements BeanPostProcessor, 
     @Override
     public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
         if (bean instanceof BlueprintContainerAware) {
-            ((BlueprintContainerAware)bean).setBlueprintContainer(new SpringBackedBlueprintContainer(applicationContext));
+            ((BlueprintContainerAware) bean).setBlueprintContainer(new SpringBackedBlueprintContainer(applicationContext));
         }
         return bean;
     }

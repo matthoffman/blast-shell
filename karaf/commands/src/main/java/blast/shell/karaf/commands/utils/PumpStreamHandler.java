@@ -32,8 +32,7 @@ import java.io.IOException;
  *
  * @version $Rev: 705608 $ $Date: 2008-10-17 15:28:45 +0200 (Fri, 17 Oct 2008) $
  */
-public class PumpStreamHandler
-{
+public class PumpStreamHandler {
     private InputStream in;
 
     private OutputStream out;
@@ -96,18 +95,18 @@ public class PumpStreamHandler
 
         if (in != null) {
             inputPump = createInputPump(in, out, true);
-        }
-        else {
+        } else {
             try {
                 out.close();
-            } catch (IOException e) { }
+            } catch (IOException e) {
+            }
         }
     }
 
     /**
      * Attach to a child streams from the given process.
      *
-     * @param p     The process to attach to.
+     * @param p The process to attach to.
      */
     public void attach(final Process p) {
         assert p != null;
@@ -116,6 +115,7 @@ public class PumpStreamHandler
         setChildOutputStream(p.getInputStream());
         setChildErrorStream(p.getErrorStream());
     }
+
     /**
      * Start pumping the streams.
      */
@@ -163,10 +163,12 @@ public class PumpStreamHandler
 
         try {
             err.flush();
-        } catch (IOException e) { }
+        } catch (IOException e) {
+        }
         try {
             out.flush();
-        } catch (IOException e) { }
+        } catch (IOException e) {
+        }
     }
 
     /**
@@ -203,10 +205,10 @@ public class PumpStreamHandler
      * Creates a stream pumper to copy the given input stream to the
      * given output stream.
      *
-     * @param in                    The input stream to copy from.
-     * @param out                   The output stream to copy to.
-     * @param closeWhenExhausted    If true close the inputstream.
-     * @return                      A thread object that does the pumping.
+     * @param in                 The input stream to copy from.
+     * @param out                The output stream to copy to.
+     * @param closeWhenExhausted If true close the inputstream.
+     * @return A thread object that does the pumping.
      */
     protected Thread createPump(final InputStream in, final OutputStream out, final boolean closeWhenExhausted) {
         assert in != null;

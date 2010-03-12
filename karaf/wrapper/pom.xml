@@ -10,8 +10,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>shell-karaf-wrapper</artifactId>
-    
-   <dependencies>
+
+    <dependencies>
         <dependency>
             <groupId>blast</groupId>
             <artifactId>shell-core</artifactId>
@@ -23,20 +23,20 @@
             <artifactId>org.apache.felix.karaf.shell.console</artifactId>
             <version>1.5.0-SNAPSHOT</version>
         </dependency>
-       
-       <dependency>
+
+        <dependency>
             <groupId>org.springframework.osgi</groupId>
             <artifactId>spring-osgi-mock</artifactId>
             <version>1.2.1</version>
         </dependency>
-       
+
         <dependency>
             <groupId>org.osgi</groupId>
             <artifactId>org.osgi.compendium</artifactId>
             <version>4.2.0</version>
         </dependency>
 
-       <dependency>
+        <dependency>
             <groupId>org.osgi</groupId>
             <artifactId>org.osgi.core</artifactId>
             <version>4.2.0</version>
@@ -79,6 +79,6 @@
             <optional>true</optional>
         </dependency>
 
-        </dependencies>
+    </dependencies>
 
 </project>

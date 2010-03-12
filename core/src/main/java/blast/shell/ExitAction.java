@@ -43,8 +43,8 @@ public class ExitAction extends CommandSupport implements ApplicationContextAwar
                 // we're not in a Spring environment, or at least not one we understand.  We don't know how to shut down peacefully.
                 // TODO
             } else {
-                ((AbstractApplicationContext)applicationContext).stop();
-                ((AbstractApplicationContext)applicationContext).close();
+                ((AbstractApplicationContext) applicationContext).stop();
+                ((AbstractApplicationContext) applicationContext).close();
                 log.debug("Shut down Spring Application Context");
                 System.out.println("Shut down context");
             }

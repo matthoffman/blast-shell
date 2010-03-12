@@ -16,10 +16,8 @@ import java.util.ArrayList;
 
 /**
  * Hello world!
- *
  */
-public class App 
-{
+public class App {
 
     public ApplicationContext start() {
         // create the Spring application context
@@ -27,7 +25,7 @@ public class App
     }
 
     public static void main(String[] args) {
-        
+
         try {
             initLogging();
         } catch (FileNotFoundException e) {
@@ -46,7 +44,7 @@ public class App
 
             factory.registerCommandProcessor(commandProcessor);
             factory.setCompleters(new ArrayList<Completer>(registry.getCompleters().values()));
-            
+
         } catch (Throwable t) {
             log.error("Error starting application: ", t);
             log.error("Exiting.");

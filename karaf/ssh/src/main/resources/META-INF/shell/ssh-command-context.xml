@@ -48,7 +48,7 @@
     </bean>
 
     <bean id="sshServerFactory" class="blast.shell.karaf.ssh.SshServerFactory" init-method="start"
-      
+
     <!-- use this if you want to use JAAS -->
     <!--
     <bean id="passwordAuthenticator" class="org.apache.sshd.server.jaas.JaasPasswordAuthenticator">

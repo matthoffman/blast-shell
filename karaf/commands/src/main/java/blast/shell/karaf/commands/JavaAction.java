@@ -26,7 +26,7 @@ import blast.shell.CommandSupport;
 
 /**
  * Execute a Java standard application.
- *
+ * <p/>
  * <p>By default looks for static main(String[]) to execute, but
  * you can specify a different static method that takes a String[]
  * to execute instead.
@@ -39,10 +39,10 @@ public class JavaAction extends CommandSupport {
     @Option(name = "-m", aliases = {"--method"}, description = "Invoke a named method", required = false, multiValued = false)
     private String methodName = "main";
 
-    @Argument(index = 0, name = "className", description="The name of the class to invoke", required = true, multiValued = false)
+    @Argument(index = 0, name = "className", description = "The name of the class to invoke", required = true, multiValued = false)
     private String className;
 
-    @Argument(index = 1, name = "arguments", description="Arguments to pass to the method of the given class", required = false, multiValued = false)
+    @Argument(index = 1, name = "arguments", description = "Arguments to pass to the method of the given class", required = false, multiValued = false)
     private List<String> args;
 
     protected Object doExecute() throws Exception {

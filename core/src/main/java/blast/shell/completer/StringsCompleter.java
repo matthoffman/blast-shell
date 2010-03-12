@@ -32,11 +32,11 @@ import blast.shell.Completer;
  * @version $Rev: 722797 $ $Date: 2008-12-03 08:18:16 +0100 (Wed, 03 Dec 2008) $
  */
 public class StringsCompleter
-    implements Completer
-{
+        implements Completer {
     private final SortedSet<String> strings = new TreeSet<String>();
 
-    public StringsCompleter() {}
+    public StringsCompleter() {
+    }
 
     public StringsCompleter(final Collection<String> strings) {
         assert strings != null;

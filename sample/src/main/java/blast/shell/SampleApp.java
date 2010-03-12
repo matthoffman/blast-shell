@@ -16,10 +16,8 @@ import java.util.ArrayList;
 
 /**
  * Hello world!
- *
  */
-public class SampleApp 
-{
+public class SampleApp {
 
     public static void main(String[] args) {
 

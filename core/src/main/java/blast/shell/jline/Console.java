@@ -51,8 +51,7 @@ import org.osgi.service.command.Converter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class Console implements Runnable
-{
+public class Console implements Runnable {
 
     public static final String SHELL_INIT_SCRIPT = "blast.shell.init.script";
     public static final String PROMPT = "PROMPT";
@@ -81,8 +80,7 @@ public class Console implements Runnable
                    PrintStream err,
                    Terminal term,
                    Completer completer,
-                   Runnable closeCallback) throws Exception
-    {
+                   Runnable closeCallback) throws Exception {
         this.in = in;
         this.out = out;
         this.err = err;
@@ -94,9 +92,9 @@ public class Console implements Runnable
         this.closeCallback = closeCallback;
 
         reader = new ConsoleReader(this.consoleInput,
-                                   new PrintWriter(this.out),
-                                   getClass().getResourceAsStream("keybinding.properties"),
-                                   this.terminal);
+                new PrintWriter(this.out),
+                getClass().getResourceAsStream("keybinding.properties"),
+                this.terminal);
 
         File file = new File(System.getProperty("user.home"), ".blast/shell.history");
         file.getParentFile().mkdirs();
@@ -104,14 +102,14 @@ public class Console implements Runnable
         session.put(".jline.history", reader.getHistory());
         if (completer != null) {
             reader.addCompletor(
-                new CompleterAsCompletor(
-                    new AggregateCompleter(
-                        Arrays.asList(
-                            completer,
-                            new SessionScopeCompleter( session, completer )
-                        )
+                    new CompleterAsCompletor(
+                            new AggregateCompleter(
+                                    Arrays.asList(
+                                            completer,
+                                            new SessionScopeCompleter(session, completer)
+                                    )
+                            )
                     )
-                )
             );
         }
         if (Boolean.getBoolean("jline.nobell")) {
@@ -133,8 +131,7 @@ public class Console implements Runnable
         Thread.interrupted();
     }
 
-    public void run()
-    {
+    public void run() {
         running = true;
         pipe.start();
         welcome();
@@ -167,48 +164,41 @@ public class Console implements Runnable
         while (running) {
             try {
                 String line = reader.readLine(getPrompt());
-                if (line == null)
-                {
+                if (line == null) {
                     break;
                 }
                 //session.getConsole().println("Executing: " + line);
                 Object result = session.execute(line);
-                if (result != null)
-                {
+                if (result != null) {
                     session.getConsole().println(session.format(result, Converter.INSPECT));
                 }
             }
-            catch (InterruptedIOException e)
-            {
+            catch (InterruptedIOException e) {
                 //System.err.println("^C");
                 // TODO: interrupt current thread
             }
-            catch (CloseShellException e)
-            {
+            catch (CloseShellException e) {
                 break;
             }
-            catch (Throwable t)
-            {
+            catch (Throwable t) {
                 try {
                     LOGGER.info("Exception caught while executing command", t);
                     session.put(LAST_EXCEPTION, t);
                     session.getConsole().print(Ansi.ansi().fg(Ansi.Color.RED).toString());
-                    if ( isPrintStackTraces()) {
+                    if (isPrintStackTraces()) {
                         t.printStackTrace(session.getConsole());
-                    }
-                    else {
+                    } else {
                         session.getConsole().println("Error executing command: "
                                 + (t.getMessage() != null ? t.getMessage() : t.getClass().getName()));
                     }
                     session.getConsole().print(Ansi.ansi().fg(Ansi.Color.DEFAULT).toString());
                 } catch (Exception ignore) {
-                        // ignore
+                    // ignore
                 }
             }
         }
         //System.err.println("Exiting console...");
-        if (closeCallback != null)
-        {
+        if (closeCallback != null) {
             closeCallback.run();
         }
     }
@@ -292,10 +282,8 @@ public class Console implements Runnable
         interrupt = true;
     }
 
-    private class ConsoleInputStream extends InputStream
-    {
-        private int read(boolean wait) throws IOException
-        {
+    private class ConsoleInputStream extends InputStream {
+        private int read(boolean wait) throws IOException {
             if (!running) {
                 return -1;
             }
@@ -318,14 +306,12 @@ public class Console implements Runnable
         }
 
         @Override
-        public int read() throws IOException
-        {
+        public int read() throws IOException {
             return read(true);
         }
 
         @Override
-        public int read(byte b[], int off, int len) throws IOException
-        {
+        public int read(byte b[], int off, int len) throws IOException {
             if (b == null) {
                 throw new NullPointerException();
             } else if (off < 0 || len < 0 || len > b.length - off) {
@@ -352,32 +338,23 @@ public class Console implements Runnable
         }
     }
 
-    private class Pipe implements Runnable
-    {
-        public void run()
-        {
+    private class Pipe implements Runnable {
+        public void run() {
             try {
-                while (running)
-                {
-                    try
-                    {
+                while (running) {
+                    try {
                         int c;
                         if (terminal instanceof AnsiWindowsTerminal) {
                             c = ((AnsiWindowsTerminal) terminal).readDirectChar(in);
                         } else {
                             c = terminal.readCharacter(in);
                         }
-                        if (c == -1)
-                        {
+                        if (c == -1) {
                             queue.put(c);
                             return;
-                        }
-                        else if (c == 4)
-                        {
+                        } else if (c == 4) {
                             err.println("^D");
-                        }
-                        else if (c == 3)
-                        {
+                        } else if (c == 3) {
                             err.println("^C");
                             reader.getCursorBuffer().clearBuffer();
                             interrupt();
@@ -389,8 +366,7 @@ public class Console implements Runnable
                     }
                 }
             }
-            finally
-            {
+            finally {
                 close();
             }
         }

@@ -14,7 +14,7 @@ public class BasicPasswordAuthenticator implements PasswordAuthenticator {
 
     @Override
     public boolean authenticate(String username, String password, ServerSession session) {
-        if ( users != null ) {
+        if (users != null) {
             if (users.get(username) != null) {
                 if (users.get(username).equals(password)) {
                     return true;

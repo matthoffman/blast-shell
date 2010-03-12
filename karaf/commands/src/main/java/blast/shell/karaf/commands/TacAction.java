@@ -45,15 +45,14 @@ public class TacAction extends CommandSupport {
         StringWriter sw = new StringWriter();
         Writer[] writers;
         if (file != null) {
-            writers = new Writer[] { sw, new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file))) };
+            writers = new Writer[]{sw, new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file)))};
         } else {
-            writers = new Writer[] { sw };
+            writers = new Writer[]{sw};
         }
         BufferedReader rdr = new BufferedReader(new InputStreamReader(System.in));
         String s = rdr.readLine();
         boolean first = true;
-        while (s != null)
-        {
+        while (s != null) {
             for (Writer w : writers) {
                 if (!first) {
                     w.write("\n");

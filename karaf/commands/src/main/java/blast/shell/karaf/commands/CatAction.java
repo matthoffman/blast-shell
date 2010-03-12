@@ -52,8 +52,7 @@ public class CatAction extends CommandSupport {
         if (paths.size() == 1 && "-".equals(paths.get(0))) {
             log.info("Printing STDIN");
             cat(new BufferedReader(new InputStreamReader(System.in)));
-        }
-        else {
+        } else {
             for (String filename : paths) {
                 BufferedReader reader;
 
@@ -86,8 +85,7 @@ public class CatAction extends CommandSupport {
         return null;
     }
 
-    private void cat(final BufferedReader reader) throws IOException
-    {
+    private void cat(final BufferedReader reader) throws IOException {
         String line;
         int lineno = 1;
 

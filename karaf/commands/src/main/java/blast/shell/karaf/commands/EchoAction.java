@@ -7,13 +7,12 @@ import org.apache.felix.gogo.commands.Option;
 import org.apache.felix.gogo.commands.Argument;
 import blast.shell.CommandSupport;
 
-@Command(scope = "shell", name = "echo", description="Echoes or prints arguments to STDOUT")
-public class EchoAction extends CommandSupport
-{
+@Command(scope = "shell", name = "echo", description = "Echoes or prints arguments to STDOUT")
+public class EchoAction extends CommandSupport {
     @Option(name = "-n", aliases = {}, description = "Do not print the trailing newline character", required = false, multiValued = false)
     private boolean noTrailingNewline = false;
 
-    @Argument(index = 0, name = "arguments", description="Arguments to display separated by whitespaces", required = false, multiValued = true)
+    @Argument(index = 0, name = "arguments", description = "Arguments to display separated by whitespaces", required = false, multiValued = true)
     private List<String> args;
 
     protected Object doExecute() throws Exception {

@@ -31,8 +31,7 @@ import blast.shell.Completer;
  *
  * @version $Rev: 699733 $ $Date: 2008-09-27 22:55:23 +0200 (Sat, 27 Sep 2008) $
  */
-public class AggregateCompleter implements Completer
-{
+public class AggregateCompleter implements Completer {
     private final Collection<Completer> completers;
 
     public AggregateCompleter(final Collection<Completer> completers) {
@@ -69,8 +68,7 @@ public class AggregateCompleter implements Completer
         return max;
     }
 
-    private class Completion
-    {
+    private class Completion {
         public final List<String> candidates;
 
         public int cursor;

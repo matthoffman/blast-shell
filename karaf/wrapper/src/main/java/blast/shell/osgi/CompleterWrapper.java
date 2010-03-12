@@ -8,7 +8,7 @@ import java.util.List;
  *
  *
  */
-public class CompleterWrapper implements org.apache.felix.karaf.shell.console.Completer{
+public class CompleterWrapper implements org.apache.felix.karaf.shell.console.Completer {
 
     blast.shell.Completer blastCompleter;
 

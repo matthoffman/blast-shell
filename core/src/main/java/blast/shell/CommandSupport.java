@@ -25,7 +25,6 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Originally from the Apache Karaf project, but stripped down to work in a non-OSGi context.
- *
  */
 public abstract class CommandSupport implements Action {
 
@@ -39,7 +38,6 @@ public abstract class CommandSupport implements Action {
     }
 
     protected abstract Object doExecute() throws Exception;
-
 
 
 }

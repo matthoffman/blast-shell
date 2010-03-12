@@ -47,25 +47,25 @@ import org.apache.felix.gogo.commands.Option;
 @Command(scope = "shell", name = "sort", description = "Write sorted concatenation of all files to standard output.")
 public class SortAction extends CommandSupport {
 
-    @Option(name = "-f", aliases = { "-ignore-case" }, description = "fold lower case to upper case characters", required = false, multiValued = false)
+    @Option(name = "-f", aliases = {"-ignore-case"}, description = "fold lower case to upper case characters", required = false, multiValued = false)
     private boolean caseInsensitive;
 
-    @Option(name = "-r", aliases = { "--reverse" }, description = "reverse the result of comparisons", required = false, multiValued = false)
+    @Option(name = "-r", aliases = {"--reverse"}, description = "reverse the result of comparisons", required = false, multiValued = false)
     private boolean reverse;
 
-    @Option(name = "-u", aliases = { "--unique" }, description = "output only the first of an equal run", required = false, multiValued = false)
+    @Option(name = "-u", aliases = {"--unique"}, description = "output only the first of an equal run", required = false, multiValued = false)
     private boolean unique;
 
-    @Option(name = "-t", aliases = { "--field-separator" }, description = "use SEP instead of non-blank to blank transition", required = false, multiValued = false)
+    @Option(name = "-t", aliases = {"--field-separator"}, description = "use SEP instead of non-blank to blank transition", required = false, multiValued = false)
     private String separator;
 
-    @Option(name = "-b", aliases = { "--ignore-leading-blanks" }, description = "ignore leading blanks", required = false, multiValued = false)
+    @Option(name = "-b", aliases = {"--ignore-leading-blanks"}, description = "ignore leading blanks", required = false, multiValued = false)
     private boolean ignoreBlanks;
 
-    @Option(name = "-k", aliases = { "--key" }, description = "Fields to use for sorting separated by whitespaces", required = false, multiValued = true)
+    @Option(name = "-k", aliases = {"--key"}, description = "Fields to use for sorting separated by whitespaces", required = false, multiValued = true)
     private List<String> sortFields;
 
-    @Option(name = "-n", aliases = { "--numeric-sort" }, description = "compare according to string numerical value", required = false, multiValued = false)
+    @Option(name = "-n", aliases = {"--numeric-sort"}, description = "compare according to string numerical value", required = false, multiValued = false)
     private boolean numeric;
 
     @Argument(index = 0, name = "files", description = "A list of files separated by whitespaces", required = false, multiValued = true)
@@ -103,8 +103,7 @@ public class SortAction extends CommandSupport {
                 }
             }
             sort(lines, System.out);
-        }
-        else {
+        } else {
             sort(System.in, System.out);
         }
         return null;
@@ -146,11 +145,12 @@ public class SortAction extends CommandSupport {
         private List<Key> sortKeys;
 
         private static Pattern fpPattern;
+
         static {
-            final String Digits     = "(\\p{Digit}+)";
-            final String HexDigits  = "(\\p{XDigit}+)";
-            final String Exp        = "[eE][+-]?" + Digits;
-            final String fpRegex    = "([\\x00-\\x20]*[+-]?(NaN|Infinity|(((" + Digits + "(\\.)?(" + Digits + "?)(" + Exp + ")?)|(\\.(" + Digits + ")(" + Exp + ")?)|(((0[xX]" + HexDigits + "(\\.)?)|(0[xX]" + HexDigits + "?(\\.)" + HexDigits + "))[pP][+-]?" + Digits + "))" + "[fFdD]?))[\\x00-\\x20]*)(.*)";
+            final String Digits = "(\\p{Digit}+)";
+            final String HexDigits = "(\\p{XDigit}+)";
+            final String Exp = "[eE][+-]?" + Digits;
+            final String fpRegex = "([\\x00-\\x20]*[+-]?(NaN|Infinity|(((" + Digits + "(\\.)?(" + Digits + "?)(" + Exp + ")?)|(\\.(" + Digits + ")(" + Exp + ")?)|(((0[xX]" + HexDigits + "(\\.)?)|(0[xX]" + HexDigits + "?(\\.)" + HexDigits + "))[pP][+-]?" + Digits + "))" + "[fFdD]?))[\\x00-\\x20]*)(.*)";
             fpPattern = Pattern.compile(fpRegex);
         }
 
@@ -192,7 +192,7 @@ public class SortAction extends CommandSupport {
                 }
                 if (res != 0) {
                     if (key.reverse) {
-                        res = - res;
+                        res = -res;
                     }
                     break;
                 }
@@ -247,7 +247,7 @@ public class SortAction extends CommandSupport {
                 start = 0;
             }
             if (key.endField > 0 && key.endField * 2 < fields.size()) {
-                end =  fields.get((key.endField - 1) * 2);
+                end = fields.get((key.endField - 1) * 2);
                 if (key.ignoreBlanksEnd) {
                     while (end < fields.get((key.endField - 1) * 2 + 1) && Character.isWhitespace(str.charAt(end))) {
                         end++;
@@ -259,7 +259,7 @@ public class SortAction extends CommandSupport {
             } else {
                 end = str.length();
             }
-            return new int[] { start, end };
+            return new int[]{start, end};
         }
 
         protected List<Integer> getFieldIndexes(String o) {
