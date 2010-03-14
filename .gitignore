@@ -2,8 +2,11 @@
 .DS_Store
 
 # I don't like checking in my IDE files
+*.iml
 **/*.iml
+*.ipr
 **/*.ipr
+*.iws
 **/*.iws
 .idea/
 .idea/**
