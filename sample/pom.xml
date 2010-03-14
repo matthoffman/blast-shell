@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>blastshell-sample</artifactId>
+    <artifactId>shell-sample</artifactId>
     <build>
         <plugins>
             <!--
