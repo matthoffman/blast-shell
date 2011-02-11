@@ -16,14 +16,12 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.4</version>
             <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
-            <version>1.2.15</version>
             <exclusions>
                 <exclusion>
                     <artifactId>jms</artifactId>
@@ -43,14 +41,12 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <version>${slf4j.version}</version>
         </dependency>
 
         <!-- locally, we use Log4J, but others don't need to -->
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
-            <version>${slf4j.version}</version>
             <optional>true</optional>
         </dependency>
 
@@ -58,40 +54,38 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-beans</artifactId>
-            <version>${spring.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-core</artifactId>
-            <version>${spring.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
-            <version>${spring.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
-            <version>${spring.version}</version>
         </dependency>
 
         <dependency>
             <groupId>jline</groupId>
             <artifactId>jline</artifactId>
-            <version>${jline.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.fusesource.jansi</groupId>
             <artifactId>jansi</artifactId>
-            <version>${jansi.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.apache.felix.gogo</groupId>
             <artifactId>org.apache.felix.gogo.commands</artifactId>
-            <version>${felix.gogo.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.felix.gogo</groupId>
+            <artifactId>org.apache.felix.gogo.runtime</artifactId>
         </dependency>
     </dependencies>
 </project>

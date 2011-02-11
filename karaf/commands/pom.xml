@@ -59,5 +59,10 @@
             <groupId>org.apache.felix.gogo</groupId>
             <artifactId>org.apache.felix.gogo.commands</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>org.apache.felix.karaf.shell</groupId>
+            <artifactId>org.apache.felix.karaf.shell.commands</artifactId>
+        </dependency>
     </dependencies>
 </project>

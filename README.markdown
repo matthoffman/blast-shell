@@ -40,6 +40,16 @@ Extensibility
 To add a new command, simply implement org.apache.felix.gogo.commands.Action and annotate it with org.apache.felix.gogo.commands.Command, as well as org.apache.felix.gogo.commands.Argument and org.apache.felix.gogo.commands.Option to mark options and arguments. 
 Then register that bean with Spring.  Blast Shell will pick up any Spring bean implementing Action. 
 
+
+Similar Projects
+----------------
+If you're looking at this, be sure to also check out Sonatype's gshell project, also on Github. It also started from the Karaf shell (I'm not actually sure who copied from whom, but either way, they're similar),
+but meanwhile they've made a lot of changes and improvements.
+That's a pro and a con: It has a lot of interesting features (the nested command sets are really cool, for example) but as of this writing doesn't support
+access via an SSH server, and it's more difficult to embed unless you're already using Guice (not insurmountable, but just a bit more work).
+I worked for a while on getting SSH working in gshell, but meanwhile, blast-shell does what I need it to do.
+
+
 License
 -------
 

@@ -47,8 +47,6 @@
         <property name="path" value="${hostKey}"/>
     </bean>
 
-    <bean id="sshServerFactory" class="blast.shell.karaf.ssh.SshServerFactory" init-method="start"
-
     <!-- use this if you want to use JAAS -->
     <!--
     <bean id="passwordAuthenticator" class="org.apache.sshd.server.jaas.JaasPasswordAuthenticator">
@@ -58,9 +56,9 @@
 
     <!-- this is a very basic username + password implementation -->
     <bean id="passwordAuthenticator" class="blast.shell.karaf.ssh.BasicPasswordAuthenticator">
-        <property name="users">
+        <constructor-arg index="0">
             <util:properties location="classpath:ssh.passwd"/>
-        </property>
+        </constructor-arg>
     </bean>
 
     <bean id="sshServerFactory" class="org.apache.felix.karaf.shell.ssh.SshServerFactory" init-method="start"

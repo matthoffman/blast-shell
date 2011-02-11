@@ -136,6 +136,7 @@
             <groupId>org.apache.felix.gogo</groupId>
             <artifactId>org.apache.felix.gogo.commands</artifactId>
         </dependency>
+
     </dependencies>
 
 </project>

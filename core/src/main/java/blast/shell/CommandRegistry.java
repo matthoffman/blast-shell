@@ -1,10 +1,12 @@
 package blast.shell;
 
+import blast.shell.completer.AggregateCompleter;
+import blast.shell.completer.ArgumentCompleter;
+import blast.shell.completer.NullCompleter;
+import blast.shell.completer.StringsCompleter;
 import org.apache.felix.gogo.commands.Action;
 import org.apache.felix.gogo.commands.Command;
 import org.apache.felix.gogo.runtime.shell.CommandShellImpl;
-import blast.shell.Completable;
-import blast.shell.completer.*;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 

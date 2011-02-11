@@ -42,13 +42,13 @@
     </modules>
 
     <properties>
-        <spring.version>2.5.6.SEC01</spring.version>
-        <sshd.version>0.3.0</sshd.version>
+        <spring.version>2.5.6.SEC02</spring.version>
+        <sshd.version>0.5.0</sshd.version>
         <jline.version>0.9.95-20091026.080844</jline.version>
-        <felix.gogo.version>0.2.2</felix.gogo.version>
+        <felix.gogo.version>0.4.0</felix.gogo.version>
         <karaf.version>1.5.0-SNAPSHOT</karaf.version>
-        <jansi.version>1.1</jansi.version>
-        <slf4j.version>1.4.3</slf4j.version>
+        <jansi.version>1.5</jansi.version>
+        <slf4j.version>1.6.1</slf4j.version>
     </properties>
 
     <dependencyManagement>
@@ -130,6 +130,12 @@
                 <version>${jline.version}</version>
             </dependency>
 
+            <!--<dependency>-->
+            <!--<groupId>org.sonatype.jline</groupId>-->
+            <!--<artifactId>jline</artifactId>-->
+            <!--<version>2.5</version>-->
+            <!--</dependency>-->
+
             <dependency>
                 <groupId>org.fusesource.jansi</groupId>
                 <artifactId>jansi</artifactId>
@@ -140,14 +146,30 @@
                 <groupId>org.apache.felix.gogo</groupId>
                 <artifactId>org.apache.felix.gogo.commands</artifactId>
                 <version>${felix.gogo.version}</version>
-              </dependency>
+            </dependency>
 
-        <dependency>
-            <groupId>org.apache.felix.karaf.shell</groupId>
-            <artifactId>org.apache.felix.karaf.shell.ssh</artifactId>
-            <version>${karaf.version}</version>
-          </dependency>
+
+            <dependency>
+                <groupId>org.apache.felix.gogo</groupId>
+                <artifactId>org.apache.felix.gogo.runtime</artifactId>
+                <version>${felix.gogo.version}</version>
+            </dependency>
+
+
+            <dependency>
+                <groupId>org.apache.felix.karaf.shell</groupId>
+                <artifactId>org.apache.felix.karaf.shell.ssh</artifactId>
+                <version>${karaf.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.felix.karaf.shell</groupId>
+                <artifactId>org.apache.felix.karaf.shell.commands</artifactId>
+                <version>${karaf.version}</version>
+            </dependency>
+
 
         </dependencies>
     </dependencyManagement>
+
 </project>                                     

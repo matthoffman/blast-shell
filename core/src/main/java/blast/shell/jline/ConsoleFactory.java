@@ -18,20 +18,19 @@
  */
 package blast.shell.jline;
 
-import java.io.InputStream;
-import java.io.PrintStream;
-import java.io.OutputStream;
-import java.lang.reflect.Method;
-import java.util.List;
-import java.util.concurrent.Callable;
-
 import blast.shell.Completer;
 import blast.shell.completer.AggregateCompleter;
+import jline.Terminal;
 import org.apache.log4j.Logger;
+import org.fusesource.jansi.AnsiConsole;
 import org.osgi.service.command.CommandProcessor;
 import org.osgi.service.command.CommandSession;
-import org.fusesource.jansi.AnsiConsole;
-import jline.Terminal;
+
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.PrintStream;
+import java.lang.reflect.Method;
+import java.util.List;
 
 public class ConsoleFactory {
     private static final Logger log = Logger.getLogger(ConsoleFactory.class);

@@ -27,7 +27,7 @@
     </appender>
 
     <!-- Default log level for all our classes -->
-    <logger name="carapace">
+    <logger name="blast.shell">
         <level value="DEBUG"/>
     </logger>
 

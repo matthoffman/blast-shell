@@ -18,12 +18,12 @@
  */
 package blast.shell.completer;
 
+import blast.shell.Completer;
+import org.osgi.service.command.CommandSession;
+
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-
-import blast.shell.Completer;
-import org.osgi.service.command.CommandSession;
 
 /**
  * Completer which uses the session scopes automatically appended in front of buffer.
@@ -74,8 +74,7 @@ public class SessionScopeCompleter implements Completer {
 
                 return max;
             }
-        }
-        catch (Exception ignore) {
+        } catch (Exception ignore) {
         }
         return -1;
     }

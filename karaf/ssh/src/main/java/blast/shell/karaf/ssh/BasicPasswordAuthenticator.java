@@ -12,6 +12,11 @@ import java.util.Properties;
 public class BasicPasswordAuthenticator implements PasswordAuthenticator {
     private Properties users;
 
+
+    public BasicPasswordAuthenticator(Properties users) {
+        this.users = users;
+    }
+
     @Override
     public boolean authenticate(String username, String password, ServerSession session) {
         if (users != null) {

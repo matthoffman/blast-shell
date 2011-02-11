@@ -1,9 +1,8 @@
 package blast.shell;
 
-import blast.shell.jline.ConsoleFactory;
-import org.apache.felix.gogo.runtime.shell.CommandShellImpl;
 import org.apache.log4j.Logger;
 import org.apache.log4j.xml.DOMConfigurator;
+import org.apache.sshd.SshServer;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.util.ResourceUtils;
@@ -11,19 +10,21 @@ import org.springframework.util.SystemPropertyUtils;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
 
 /**
- * Hello world!
+ *
+ *
  */
-public class App {
+public class SampleSshApp {
 
     public ApplicationContext start() {
         // create the Spring application context
         return new ClassPathXmlApplicationContext("classpath*:META-INF/shell/*-context.xml");
     }
 
+
     public static void main(String[] args) {
+
 
         try {
             initLogging();
@@ -33,23 +34,21 @@ public class App {
             return;
         }
         Logger log = Logger.getLogger(App.class);
+        SampleSshApp app = new SampleSshApp();
 
-        App q = new App();
         try {
-            ApplicationContext context = q.start();
-            ConsoleFactory factory = (ConsoleFactory) context.getBean("consoleFactory");
-            CommandShellImpl commandProcessor = (CommandShellImpl) context.getBean("commandProcessor");
-            CommandRegistry registry = (CommandRegistry) context.getBean("commandCompleter");
-
-            factory.registerCommandProcessor(commandProcessor);
-            factory.setCompleters(new ArrayList<Completer>(registry.getCompleters().values()));
-
+            ApplicationContext context = app.start();
+            SshServer server = (SshServer) context.getBean("sshServer");
+            log.info("Server started on port " + server.getPort());
         } catch (Throwable t) {
             log.error("Error starting application: ", t);
             log.error("Exiting.");
             System.exit(1);
         }
+
+
     }
+
 
     private static void initLogging() throws FileNotFoundException {
         String location = System.getProperty("log4j.configuration", "classpath:log4j.xml");

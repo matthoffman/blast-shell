@@ -18,24 +18,6 @@
  */
 package blast.shell.jline;
 
-import java.io.CharArrayWriter;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.InterruptedIOException;
-import java.io.PrintStream;
-import java.io.PrintWriter;
-import java.io.Reader;
-import java.util.Arrays;
-import java.util.Properties;
-import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.Callable;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import blast.shell.CloseShellException;
 import blast.shell.Completer;
 import blast.shell.completer.AggregateCompleter;
@@ -50,6 +32,14 @@ import org.osgi.service.command.CommandSession;
 import org.osgi.service.command.Converter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.*;
+import java.util.Arrays;
+import java.util.Properties;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Console implements Runnable {
 
@@ -172,15 +162,12 @@ public class Console implements Runnable {
                 if (result != null) {
                     session.getConsole().println(session.format(result, Converter.INSPECT));
                 }
-            }
-            catch (InterruptedIOException e) {
+            } catch (InterruptedIOException e) {
                 //System.err.println("^C");
                 // TODO: interrupt current thread
-            }
-            catch (CloseShellException e) {
+            } catch (CloseShellException e) {
                 break;
-            }
-            catch (Throwable t) {
+            } catch (Throwable t) {
                 try {
                     LOGGER.info("Exception caught while executing command", t);
                     session.put(LAST_EXCEPTION, t);
@@ -360,13 +347,11 @@ public class Console implements Runnable {
                             interrupt();
                         }
                         queue.put(c);
-                    }
-                    catch (Throwable t) {
+                    } catch (Throwable t) {
                         return;
                     }
                 }
-            }
-            finally {
+            } finally {
                 close();
             }
         }
