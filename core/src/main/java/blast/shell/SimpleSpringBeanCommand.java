@@ -16,7 +16,7 @@ public class SimpleSpringBeanCommand extends AbstractCommand {
     }
 
     @Override
-    protected Action createNewAction() throws Exception {
+    public Action createNewAction() {
         return actionBean;
     }
 }
