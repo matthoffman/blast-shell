@@ -16,25 +16,24 @@
  */
 package blast.shell.karaf.commands;
 
-import java.util.Locale;
-import java.text.DecimalFormatSymbols;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.lang.management.OperatingSystemMXBean;
-import java.lang.management.ManagementFactory;
-import java.lang.management.ClassLoadingMXBean;
-import java.lang.management.MemoryMXBean;
-import java.lang.management.ThreadMXBean;
-import java.lang.management.RuntimeMXBean;
-import java.lang.management.GarbageCollectorMXBean;
-import java.lang.reflect.Method;
-
-import blast.shell.CommandSupport;
 import org.apache.felix.gogo.commands.Command;
+import org.apache.karaf.shell.console.OsgiCommandSupport;
 import org.fusesource.jansi.Ansi;
 
+import java.lang.management.*;
+import java.lang.reflect.Method;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.text.NumberFormat;
+import java.util.LinkedHashMap;
+import java.util.Locale;
+import java.util.Map;
+
 @Command(scope = "shell", name = "info", description = "Prints system informations")
-public class InfoAction extends CommandSupport {
+public class InfoAction extends OsgiCommandSupport {
+    private String appName = "Karaf";
+
+    Map<String, String> systemPropertyToDisplayName = new LinkedHashMap<String, String>();
 
     private NumberFormat fmtI = new DecimalFormat("###,###", new DecimalFormatSymbols(Locale.ENGLISH));
     private NumberFormat fmtD = new DecimalFormat("###,##0.000", new DecimalFormatSymbols(Locale.ENGLISH));
@@ -52,18 +51,23 @@ public class InfoAction extends CommandSupport {
         // print Karaf informations
         //
         maxNameLen = 25;
-        System.out.println("Karaf");
-        printValue("Karaf home", maxNameLen, System.getProperty("karaf.home"));
-        printValue("Karaf base", maxNameLen, System.getProperty("karaf.base"));
+        System.out.println(appName);
+
         System.out.println();
 
+        for (Map.Entry<String, String> entry : systemPropertyToDisplayName.entrySet()) {
+            printValue(entry.getValue(), maxNameLen, System.getProperty(entry.getKey()));
+        }
         System.out.println("JVM");
         printValue("Java Virtual Machine", maxNameLen, runtime.getVmName() + " version " + runtime.getVmVersion());
+        printValue("Version", maxNameLen, System.getProperty("java.version"));
         printValue("Vendor", maxNameLen, runtime.getVmVendor());
         printValue("Uptime", maxNameLen, printDuration(runtime.getUptime()));
-        try {
-            printValue("Process CPU time", maxNameLen, printDuration(getSunOsValueAsLong(os, "getProcessCpuTime") / 1000000));
-        } catch (Throwable t) {
+        Long processCpuTime = getProcessCpuTime(os);
+        if (processCpuTime != null) {
+            printValue("Process CPU time", maxNameLen, printDuration(processCpuTime / 1000000));
+        } else {
+            printValue("Process CPU time", maxNameLen, "(unavailable)");
         }
         printValue("Total compile time", maxNameLen, printDuration(ManagementFactory.getCompilationMXBean().getTotalCompilationTime()));
 
@@ -88,22 +92,66 @@ public class InfoAction extends CommandSupport {
         printValue("Total classes loaded", maxNameLen, printLong(cl.getTotalLoadedClassCount()));
         printValue("Total classes unloaded", maxNameLen, printLong(cl.getUnloadedClassCount()));
 
-        System.out.println("Operating system");
-        printValue("Name", maxNameLen, os.getName() + " version " + os.getVersion());
+        System.out.println("Host system");
+        printValue("OS", maxNameLen, os.getName() + " version " + os.getVersion());
         printValue("Architecture", maxNameLen, os.getArch());
         printValue("Processors", maxNameLen, Integer.toString(os.getAvailableProcessors()));
+        printValue("Load average", maxNameLen, printDouble(os.getSystemLoadAverage()));
         try {
-            printValue("Total physical memory", maxNameLen, printSizeInKb(getSunOsValueAsLong(os, "getTotalPhysicalMemorySize")));
-            printValue("Free physical memory", maxNameLen, printSizeInKb(getSunOsValueAsLong(os, "getFreePhysicalMemorySize")));
-            printValue("Committed virtual memory", maxNameLen, printSizeInKb(getSunOsValueAsLong(os, "getCommittedVirtualMemorySize")));
-            printValue("Total swap space", maxNameLen, printSizeInKb(getSunOsValueAsLong(os, "getTotalSwapSpaceSize")));
-            printValue("Free swap space", maxNameLen, printSizeInKb(getSunOsValueAsLong(os, "getFreeSwapSpaceSize")));
+            try {
+                this.getClass().getClassLoader().loadClass("com.sun.management.OperatingSystemMXBean");
+                com.sun.management.OperatingSystemMXBean sunOs = (com.sun.management.OperatingSystemMXBean) os;
+                printValue("Total physical memory", maxNameLen, printSizeInKb(sunOs.getTotalPhysicalMemorySize()));
+                printValue("Free physical memory", maxNameLen, printSizeInKb(sunOs.getFreePhysicalMemorySize()));
+                printValue("Committed virtual memory", maxNameLen, printSizeInKb(sunOs.getCommittedVirtualMemorySize()));
+                printValue("Total swap space", maxNameLen, printSizeInKb(sunOs.getTotalSwapSpaceSize()));
+                printValue("Free swap space", maxNameLen, printSizeInKb(sunOs.getFreeSwapSpaceSize()));
+            } catch (ClassNotFoundException e) {
+                // we're not on a Sun JVM
+                try {
+                    printValue("Total physical memory", maxNameLen, printSizeInKb(getSunOsValueAsLong(os, "getTotalPhysicalMemorySize")));
+                    printValue("Free physical memory", maxNameLen, printSizeInKb(getSunOsValueAsLong(os, "getFreePhysicalMemorySize")));
+                    printValue("Committed virtual memory", maxNameLen, printSizeInKb(getSunOsValueAsLong(os, "getCommittedVirtualMemorySize")));
+                    printValue("Total swap space", maxNameLen, printSizeInKb(getSunOsValueAsLong(os, "getTotalSwapSpaceSize")));
+                    printValue("Free swap space", maxNameLen, printSizeInKb(getSunOsValueAsLong(os, "getFreeSwapSpaceSize")));
+                } catch (Throwable t) {
+                    printValue("Memory information unavailable", maxNameLen, "(" + t.getMessage() + ")");
+                }
+
+            }
         } catch (Throwable t) {
+            printValue("Memory information unavailable", maxNameLen, "(" + t.getMessage() + ")");
         }
+
 
         return null;
     }
 
+    private Long getProcessCpuTime(OperatingSystemMXBean os) {
+        Long processCpuTime = null;
+        try {
+            this.getClass().getClassLoader().loadClass("com.sun.management.OperatingSystemMXBean");
+            com.sun.management.OperatingSystemMXBean sunOs = (com.sun.management.OperatingSystemMXBean) os;
+            processCpuTime = sunOs.getProcessCpuTime();
+        } catch (Throwable t) {
+            try {
+                processCpuTime = getSunOsValueAsLong(os, "getProcessCpuTime");
+            } catch (Throwable t2) {
+                // ignore.  We'll report this metric as unavailable.
+            }
+        }
+        return processCpuTime;
+    }
+
+    /**
+     * Oddly enough, this doesn't work on Mac OS's; it throws an exception with message:
+     * Class blast.shell.karaf.commands.InfoAction can not access a member of class com.sun.management.UnixOperatingSystem with modifiers "public native"
+     *
+     * @param os
+     * @param name
+     * @return
+     * @throws Exception
+     */
     private long getSunOsValueAsLong(OperatingSystemMXBean os, String name) throws Exception {
         Method mth = os.getClass().getMethod(name);
         return (Long) mth.invoke(os);
@@ -115,6 +163,10 @@ public class InfoAction extends CommandSupport {
 
     private String printSizeInKb(double size) {
         return fmtI.format((long) (size / 1024)) + " kbytes";
+    }
+
+    private String printDouble(double d) {
+        return fmtD.format(d);
     }
 
     private String printDuration(double uptime) {
@@ -166,4 +218,15 @@ public class InfoAction extends CommandSupport {
         return sb.toString();
     }
 
+    public void setAppName(String appName) {
+        this.appName = appName;
+    }
+
+    public void addSystemProperty(String propertyKey, String displayName) {
+        this.systemPropertyToDisplayName.put(propertyKey, displayName);
+    }
+
+    public void setSystemPropertyToDisplayName(Map<String, String> systemPropertyToDisplayName) {
+        this.systemPropertyToDisplayName = systemPropertyToDisplayName;
+    }
 }

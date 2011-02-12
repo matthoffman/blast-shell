@@ -1,6 +1,6 @@
 package blast.shell.osgi;
 
-import org.apache.felix.karaf.shell.console.BlueprintContainerAware;
+import org.apache.karaf.shell.console.BlueprintContainerAware;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.context.ApplicationContext;

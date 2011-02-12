@@ -11,7 +11,6 @@ import org.springframework.util.SystemPropertyUtils;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
 
 /**
  * Hello world!
@@ -39,10 +38,7 @@ public class App {
             ApplicationContext context = q.start();
             ConsoleFactory factory = (ConsoleFactory) context.getBean("consoleFactory");
             CommandShellImpl commandProcessor = (CommandShellImpl) context.getBean("commandProcessor");
-            CommandRegistry registry = (CommandRegistry) context.getBean("commandCompleter");
-
             factory.registerCommandProcessor(commandProcessor);
-            factory.setCompleters(new ArrayList<Completer>(registry.getCompleters().values()));
 
         } catch (Throwable t) {
             log.error("Error starting application: ", t);

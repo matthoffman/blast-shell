@@ -9,11 +9,11 @@
 
     <bean name="blueprintContainerAwarePostProcessor" class="blast.shell.osgi.BlueprintContainerAwarePostProcessor"/>
 
-    <bean name="sshCommand" class="org.apache.felix.karaf.shell.ssh.SshAction">
+    <bean name="sshCommand" class="org.apache.karaf.shell.ssh.SshAction">
         <property name="sshClientId" value="sshClient"/>
     </bean>
 
-    <bean name="sshServerCommand" class="org.apache.felix.karaf.shell.ssh.SshServerAction">
+    <bean name="sshServerCommand" class="org.apache.karaf.shell.ssh.SshServerAction">
         <property name="sshServerId" value="sshServer"/>
     </bean>
 
@@ -23,19 +23,12 @@
     <bean id="sshServer" class="org.apache.sshd.SshServer" factory-method="setUpDefaultServer" scope="prototype">
         <property name="port" value="${sshPort}"/>
         <property name="shellFactory">
-            <bean class="org.apache.felix.karaf.shell.ssh.ShellFactoryImpl">
-                <property name="completers">
-                    <list>
-                        <bean class="blast.shell.osgi.CompleterWrapper">
-                            <constructor-arg index="0" ref="commandCompleter"/>
-                        </bean>
-                    </list>
-                </property>
+            <bean class="org.apache.karaf.shell.ssh.ShellFactoryImpl">
                 <property name="commandProcessor" ref="commandProcessor"/>
             </bean>
         </property>
         <property name="commandFactory">
-            <bean class="org.apache.felix.karaf.shell.ssh.ShellCommandFactory">
+            <bean class="org.apache.karaf.shell.ssh.ShellCommandFactory">
                 <property name="commandProcessor" ref="commandProcessor"/>
             </bean>
         </property>
@@ -61,7 +54,7 @@
         </constructor-arg>
     </bean>
 
-    <bean id="sshServerFactory" class="org.apache.felix.karaf.shell.ssh.SshServerFactory" init-method="start"
+    <bean id="sshServerFactory" class="org.apache.karaf.shell.ssh.SshServerFactory" init-method="start"
           destroy-method="stop" lazy-init="false">
         <constructor-arg ref="sshServer"/>
         <property name="start" value="true"/>

@@ -6,29 +6,25 @@
 
     <bean name="threadIo" class="org.apache.felix.gogo.runtime.threadio.ThreadIOImpl"/>
 
-    <bean name="commandProcessor" class="org.apache.felix.gogo.runtime.shell.CommandShellImpl">
+    <bean name="commandProcessor" class="blast.shell.SpringCommandShell">
         <property name="threadio" ref="threadIo"/>
     </bean>
 
-    <bean id="commandCompleter" class="blast.shell.CommandRegistry">
+    <bean id="commandRegistry" class="blast.shell.CommandRegistry">
         <property name="commandShell" ref="commandProcessor"/>
     </bean>
 
     <bean id="consoleFactory" class="blast.shell.jline.ConsoleFactory">
         <property name="start" value="true"/>
-        <property name="completers">
-            <list>
-                <ref local="commandCompleter"/>
-            </list>
-        </property>
-        <property name="terminal" ref="terminal"/>
+        <property name="terminalFactory" ref="terminalFactory"/>
+        <property name="commandRegistry" ref="commandRegistry"/>
     </bean>
 
     <bean id="terminal"
           factory-bean="terminalFactory"
           factory-method="getTerminal"/>
 
-    <bean id="terminalFactory" class="blast.shell.jline.TerminalFactory"
+    <bean id="terminalFactory" class="org.apache.karaf.shell.console.jline.TerminalFactory"
           init-method="init"
           destroy-method="destroy"/>
 

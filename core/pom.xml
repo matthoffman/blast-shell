@@ -69,23 +69,23 @@
         </dependency>
 
         <dependency>
-            <groupId>jline</groupId>
-            <artifactId>jline</artifactId>
-        </dependency>
-
-        <dependency>
             <groupId>org.fusesource.jansi</groupId>
             <artifactId>jansi</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>org.apache.felix.gogo</groupId>
-            <artifactId>org.apache.felix.gogo.commands</artifactId>
-        </dependency>
+        <!--<dependency>-->
+        <!--<groupId>org.apache.felix.gogo</groupId>-->
+        <!--<artifactId>org.apache.felix.gogo.commands</artifactId>-->
+        <!--</dependency>-->
+
+        <!--<dependency>-->
+        <!--<groupId>org.apache.felix.gogo</groupId>-->
+        <!--<artifactId>org.apache.felix.gogo.runtime</artifactId>-->
+        <!--</dependency>-->
 
         <dependency>
-            <groupId>org.apache.felix.gogo</groupId>
-            <artifactId>org.apache.felix.gogo.runtime</artifactId>
+            <groupId>org.apache.karaf.shell</groupId>
+            <artifactId>org.apache.karaf.shell.console</artifactId>
         </dependency>
     </dependencies>
 </project>

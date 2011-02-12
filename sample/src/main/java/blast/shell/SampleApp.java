@@ -1,18 +1,15 @@
 package blast.shell;
 
-import org.apache.felix.gogo.runtime.shell.CommandShellImpl;
-import blast.shell.Completer;
 import blast.shell.jline.ConsoleFactory;
+import org.apache.felix.gogo.runtime.shell.CommandShellImpl;
 import org.apache.log4j.Logger;
 import org.apache.log4j.xml.DOMConfigurator;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.util.ResourceUtils;
 import org.springframework.util.SystemPropertyUtils;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
 
 /**
  * Hello world!
@@ -36,10 +33,7 @@ public class SampleApp {
 
             ConsoleFactory factory = (ConsoleFactory) context.getBean("consoleFactory");
             CommandShellImpl commandProcessor = (CommandShellImpl) context.getBean("commandProcessor");
-            CommandRegistry registry = (CommandRegistry) context.getBean("commandCompleter");
-
             factory.registerCommandProcessor(commandProcessor);
-            factory.setCompleters(new ArrayList<Completer>(registry.getCompleters().values()));
 
         } catch (Throwable t) {
             log.error("Error starting application: ", t);

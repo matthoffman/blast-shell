@@ -18,9 +18,9 @@
  */
 package blast.shell.jline;
 
-import blast.shell.Completer;
-import blast.shell.completer.AggregateCompleter;
+import blast.shell.CommandRegistry;
 import jline.Terminal;
+import org.apache.karaf.shell.console.jline.TerminalFactory;
 import org.apache.log4j.Logger;
 import org.fusesource.jansi.AnsiConsole;
 import org.osgi.service.command.CommandProcessor;
@@ -30,15 +30,15 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.lang.reflect.Method;
-import java.util.List;
 
 public class ConsoleFactory {
     private static final Logger log = Logger.getLogger(ConsoleFactory.class);
 
+    private TerminalFactory terminalFactory;
+
     private CommandProcessor commandProcessor;
-    private List<Completer> completers;
-    private Terminal terminal;
-    private Console console;
+    private CommandRegistry commandRegistry;
+    private org.apache.karaf.shell.console.jline.Console console;
     private boolean start;
 
     public synchronized void registerCommandProcessor(CommandProcessor commandProcessor) throws Exception {
@@ -51,12 +51,8 @@ public class ConsoleFactory {
         stop();
     }
 
-    public void setCompleters(List<Completer> completers) {
-        this.completers = completers;
-    }
-
-    public void setTerminal(Terminal terminal) {
-        this.terminal = terminal;
+    public void setTerminalFactory(TerminalFactory terminalFactory) {
+        this.terminalFactory = terminalFactory;
     }
 
     public void setStart(boolean start) {
@@ -79,18 +75,27 @@ public class ConsoleFactory {
                     }
                 }
             };
-            this.console = new Console(commandProcessor,
+            Terminal terminal = terminalFactory.getTerminal();
+            this.console = new org.apache.karaf.shell.console.jline.Console(commandProcessor,
                     in,
                     wrap(out),
                     wrap(err),
                     terminal,
-                    new AggregateCompleter(completers),
                     callback);
             CommandSession session = console.getSession();
             session.put("USER", "karaf");
             session.put("APPLICATION", System.getProperty("karaf.name", "root"));
+            session.put("LINES", Integer.toString(terminal.getTerminalHeight()));
+            session.put("COLUMNS", Integer.toString(terminal.getTerminalWidth()));
+            session.put(".jline.terminal", terminal);
+            commandRegistry.registerCommandsInSession(session);
+
             new Thread(console, "Karaf Shell Console Thread").start();
         }
+    }
+
+    public void setCommandRegistry(CommandRegistry commandRegistry) {
+        this.commandRegistry = commandRegistry;
     }
 
     protected void stop() throws Exception {
