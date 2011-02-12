@@ -9,73 +9,32 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>shell-sample</artifactId>
-    <build>
-        <plugins>
-            <!--
-           <plugin>
-              <groupId>org.codehaus.mojo</groupId>
-              <artifactId>exec-maven-plugin</artifactId>
-              <version>1.1.1</version>
-              <executions>
-                  <execution>
-                      <goals>
-                          <goal>exec</goal>
-                      </goals>
-                      <phase />
-                  </execution>
-              </executions>
-              <configuration>
-                  <executable>java</executable>
-                  <arguments>
-                      <argument>-classpath</argument>
-                      <classpath />
-                      <argument>blast.shell.App</argument>
-                  </arguments>
-              </configuration>
-            </plugin>
-            -->
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
-                <version>1.1.1</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>java</goal>
-                        </goals>
-                        <phase/>
-                    </execution>
-                </executions>
-                <configuration>
-                    <mainClass>blast.shell.App</mainClass>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
+    <artifactId>shell-beanshell</artifactId>
+
 
     <dependencies>
         <dependency>
-            <groupId>blast</groupId>
-            <artifactId>shell-karaf-commands</artifactId>
-            <version>${parent.version}</version>
+            <groupId>org.beanshell</groupId>
+            <artifactId>bsh</artifactId>
+            <version>2.0b4</version>
         </dependency>
 
         <dependency>
             <groupId>blast</groupId>
-            <artifactId>shell-karaf-ssh</artifactId>
-            <version>${parent.version}</version>
-        </dependency>
-
-
-        <dependency>
-            <groupId>blast</groupId>
-            <artifactId>shell-beanshell</artifactId>
+            <artifactId>shell-core</artifactId>
             <version>${parent.version}</version>
         </dependency>
 
 
         <dependency>
+            <groupId>org.codehaus.groovy</groupId>
+            <!-- TODO: replace with groovy-all-minimal -->
+            <artifactId>groovy-all</artifactId>
+            <version>1.7.4</version>
+        </dependency>
+
+
+         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <scope>test</scope>
@@ -130,12 +89,10 @@
             <artifactId>spring-test</artifactId>
         </dependency>
 
-
-        <!--<dependency>-->
-        <!--<groupId>org.apache.felix.gogo</groupId>-->
-        <!--<artifactId>org.apache.felix.gogo.commands</artifactId>-->
-        <!--</dependency>-->
+        <dependency>
+            <groupId>org.fusesource.jansi</groupId>
+            <artifactId>jansi</artifactId>
+        </dependency>
 
     </dependencies>
-
 </project>

@@ -17,7 +17,7 @@
 package blast.shell.karaf.commands;
 
 import org.apache.felix.gogo.commands.Command;
-import org.apache.karaf.shell.console.OsgiCommandSupport;
+import org.apache.karaf.shell.console.AbstractAction;
 import org.fusesource.jansi.Ansi;
 
 import java.lang.management.*;
@@ -30,7 +30,7 @@ import java.util.Locale;
 import java.util.Map;
 
 @Command(scope = "shell", name = "info", description = "Prints system informations")
-public class InfoAction extends OsgiCommandSupport {
+public class InfoAction extends AbstractAction {
     private String appName = "Karaf";
 
     Map<String, String> systemPropertyToDisplayName = new LinkedHashMap<String, String>();
