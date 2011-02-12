@@ -3,9 +3,10 @@ Purpose
 
 This is a project to adapt the [Apache Karaf][karaf] [shell][karaf-shell] to non-OSGi, Spring-based projects.  
 It is designed to be easily integrated into existing projects, providing either SSH access to a running application, 
-or a direct console. It's certainly a work in progress.
+or a direct console. Currently, my emphasis is to embed in server applications to allow SSH access, but it works as a
+standalone app as well.
 
-Very little of this project is original work; it's mainly a wrapper around Karaf and Jline. 
+Very little of this project is original work; it's mainly a thin wrapper around Karaf.
 
 Features
 --------
@@ -13,7 +14,7 @@ Features
 * Easy extensibility -- easily add a new command for application-specific functions
 * Tab-completion
 * SSH access
-* Simply customized branding
+* Simply customized branding (startup message, prompt)
 * Built-in commands, including grep, cat, each, if, exec, more, and sort
 * Pretty colors
 
@@ -38,16 +39,17 @@ Integrating the Shell
 Extensibility
 -------------
 To add a new command, simply implement org.apache.felix.gogo.commands.Action and annotate it with org.apache.felix.gogo.commands.Command, as well as org.apache.felix.gogo.commands.Argument and org.apache.felix.gogo.commands.Option to mark options and arguments. 
-Then register that bean with Spring.  Blast Shell will pick up any Spring bean implementing Action. 
+Then register that bean with Spring.  Blast Shell will pick up any Spring bean implementing Action and expose it as an
+action in the shell.
 
 
 Similar Projects
 ----------------
-If you're looking at this, be sure to also check out Sonatype's gshell project, also on Github. It also started from the Karaf shell (I'm not actually sure who copied from whom, but either way, they're similar),
-but meanwhile they've made a lot of changes and improvements.
-That's a pro and a con: It has a lot of interesting features (the nested command sets are really cool, for example) but as of this writing doesn't support
-access via an SSH server, and it's more difficult to embed unless you're already using Guice (not insurmountable, but just a bit more work).
-I worked for a while on getting SSH working in gshell, but meanwhile, blast-shell does what I need it to do.
+If you're looking at this, be sure to also check out Sonatype's gshell project, also on Github. It bears some similarity
+with the Karaf shell (there was some code sharing back in the day, but I don't know which direction it went) but meanwhile
+they've made a lot of changes and improvements. Karaf, meanwhile, has changed as well, so at this point they just have
+different feature sets.  Gshell has nested command sets that are really cool, for example. Karaf is (currently) easier to
+embed -- as of this writing, Gshell doesn't support access via an SSH server. Gshell uses Guice, Blast Shell uses Spring.
 
 
 License
