@@ -70,10 +70,15 @@
 
         <dependency>
             <groupId>blast</groupId>
-            <artifactId>shell-beanshell</artifactId>
+            <artifactId>blastshell-beanshell</artifactId>
             <version>${parent.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>blast</groupId>
+            <artifactId>blastshell-groovy</artifactId>
+            <version>${parent.version}</version>
+        </dependency>
 
         <dependency>
             <groupId>junit</groupId>
