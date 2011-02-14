@@ -2,7 +2,18 @@ host.key
 hostkey.ser
 
 # Silly Apple
+.DS_Store?
 .DS_Store
+**/.DS_Store?
+**/.DS_Store
+Icon?
+
+# Thumbnails
+._*
+
+# Files that might appear on external disk
+.Spotlight-V100
+.Trashes
 
 # I don't like checking in my IDE files
 *.iml
@@ -23,11 +34,21 @@ target/**
 **/target/**
 **/target
 *.class
+*.log
+
+# sbt specific
+dist/*
+target/
+lib_managed/
+src_managed/
+project/boot/
+project/plugins/project/
+
 
 # We generate this, so we don't want to check it in
 host.key
 
 # Ignoring VIM files
-*.swp
-*.swo
+.*.sw[a-z]
+*.un~
 

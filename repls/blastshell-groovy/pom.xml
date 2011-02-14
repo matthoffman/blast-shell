@@ -3,34 +3,36 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>shell</artifactId>
         <groupId>blast</groupId>
+        <artifactId>blastshell-repls</artifactId>
         <version>0.1-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>shell-beanshell</artifactId>
+    <artifactId>blastshell-groovy</artifactId>
 
 
     <dependencies>
-        <dependency>
-            <groupId>org.beanshell</groupId>
-            <artifactId>bsh</artifactId>
-            <version>2.0b4</version>
-        </dependency>
-
         <dependency>
             <groupId>blast</groupId>
             <artifactId>shell-core</artifactId>
             <version>${parent.version}</version>
         </dependency>
 
-
         <dependency>
             <groupId>org.codehaus.groovy</groupId>
-            <!-- TODO: replace with groovy-all-minimal -->
             <artifactId>groovy-all</artifactId>
-            <version>1.7.4</version>
+            <version>1.7.7</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.karaf.shell</groupId>
+            <artifactId>org.apache.karaf.shell.commands</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.karaf.shell</groupId>
+            <artifactId>org.apache.karaf.shell.console</artifactId>
         </dependency>
 
 

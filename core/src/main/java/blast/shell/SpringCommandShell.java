@@ -16,7 +16,11 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- *
+ *  This class adds Command discovery on top of the standard CommandProcessor duties.  Within Karaf itself, Command
+ *  discovery is handled by the Main class (org.apache.karaf.shell.console.Main).  I had some reason for putting it
+ *  here instead -- I think it was because I had to register the commands in the session when creating it to provide
+ *  tab completion for commands, and that didn't seem to be getting done using the normal mechanism.
+ *  I'm open to a more appropriate or elegant option if there is one.
  *
  */
 public class SpringCommandShell extends CommandShellImpl implements BeanPostProcessor {

@@ -1,12 +1,18 @@
 Purpose
 -------
 
-This is a project to adapt the [Apache Karaf][karaf] [shell][karaf-shell] to non-OSGi, Spring-based projects.  
+This is a project to adapt the [Apache Karaf][karaf] [shell][karaf-shell] to non-OSGi, Spring-based* projects.
 It is designed to be easily integrated into existing projects, providing either SSH access to a running application, 
 or a direct console. Currently, my emphasis is to embed in server applications to allow SSH access, but it works as a
 standalone app as well.
 
 Very little of this project is original work; it's mainly a thin wrapper around Karaf.
+
+* In principle, this could easily be adapted to Guice-based or other non-Spring-based projects. One of the core classes
+here is blast.shell.SpringCommandShell, which uses Spring to look up available commands at runtime. The normal Karaf
+org.apache.karaf.shell.console.Main class uses a resource-loader-like discovery mechanism: define your classes in
+"META-INF/services/org/apache/karaf/shell/commands", and it will pick them up and load them using ClassLoader.loadClass().
+It would be simple to write a runtime registration option and Guice-based discovery mechanism as well.
 
 Features
 --------

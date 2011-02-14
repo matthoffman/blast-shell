@@ -1,9 +1,6 @@
 package blast.shell.beanshell;
 
-import blast.shell.CommandSupport;
 import bsh.Interpreter;
-import groovy.lang.Binding;
-import groovy.ui.InteractiveShell;
 import org.apache.felix.gogo.commands.Command;
 import org.apache.karaf.shell.console.AbstractAction;
 import org.springframework.beans.BeansException;
