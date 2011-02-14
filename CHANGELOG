@@ -1,0 +1,8 @@
+
+0.1:  Basics working against Karaf 2.1.3, using Spring:  Ssh access, a basic
+Groovy shell, a working "Info" command, other commands from Karaf (grep, cat,
+etc.) 
+Example of an embedded server available in SampleSshApp.
+TODOs and issues: 
+Groovy shell uses Groovy's deprecated "InteractiveShell", I'll try to to get the
+new Groovysh working in 0.2. 
