@@ -7,7 +7,7 @@
     <groupId>blast</groupId>
     <artifactId>shell</artifactId>
     <packaging>pom</packaging>
-    <version>0.2-SNAPSHOT</version>
+    <version>0.3-SNAPSHOT</version>
 
     <scm>
         <connection>scm:git:git@github.com:matthoffman/blast-shell.git</connection>
