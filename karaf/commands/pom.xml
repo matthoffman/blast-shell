@@ -15,7 +15,7 @@
         <dependency>
             <groupId>blast</groupId>
             <artifactId>shell-core</artifactId>
-            <version>${parent.version}</version>
+            <version>0.2-SNAPSHOT</version>
         </dependency>
 
         <dependency>

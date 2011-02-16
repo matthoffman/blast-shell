@@ -35,26 +35,26 @@
         <dependency>
             <groupId>blast</groupId>
             <artifactId>shell-karaf-commands</artifactId>
-            <version>${parent.version}</version>
+            <version>0.2-SNAPSHOT</version>
         </dependency>
 
         <dependency>
             <groupId>blast</groupId>
             <artifactId>shell-karaf-ssh</artifactId>
-            <version>${parent.version}</version>
+            <version>0.2-SNAPSHOT</version>
         </dependency>
 
 
         <dependency>
             <groupId>blast</groupId>
             <artifactId>blastshell-beanshell</artifactId>
-            <version>${parent.version}</version>
+            <version>0.2-SNAPSHOT</version>
         </dependency>
 
         <dependency>
             <groupId>blast</groupId>
             <artifactId>blastshell-groovy</artifactId>
-            <version>${parent.version}</version>
+            <version>0.2-SNAPSHOT</version>
         </dependency>
 
         <dependency>
