@@ -3,7 +3,7 @@
     <parent>
         <groupId>blast</groupId>
         <artifactId>shell-karaf</artifactId>
-        <version>0.2</version>
+        <version>0.3-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -13,7 +13,7 @@
         <dependency>
             <groupId>blast</groupId>
             <artifactId>shell-core</artifactId>
-            <version>0.2</version>
+            <version>0.3-SNAPSHOT</version>
         </dependency>
 
         <dependency>
