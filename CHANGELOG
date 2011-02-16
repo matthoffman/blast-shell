@@ -1,5 +1,7 @@
-
-0.1:  Basics working against Karaf 2.1.3, using Spring:  Ssh access, a basic
+0.2: Refactored some classes (pulling ShellFactoryImpl out as BlastShellFactoryImpl and creating the ConsoleFactory
+interface, for example) in order to let users override the branding and prompt for their SSH shell.
+Fixed the "mvn exec:java" plugin in shell-sample.
+0.1: Basics working against Karaf 2.1.3, using Spring:  Ssh access, a basic
 Groovy shell, a working "Info" command, other commands from Karaf (grep, cat,
 etc.) 
 Example of an embedded server available in SampleSshApp.

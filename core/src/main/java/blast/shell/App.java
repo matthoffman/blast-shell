@@ -1,7 +1,5 @@
 package blast.shell;
 
-import blast.shell.jline.ConsoleFactory;
-import org.apache.felix.gogo.runtime.shell.CommandShellImpl;
 import org.apache.log4j.Logger;
 import org.apache.log4j.xml.DOMConfigurator;
 import org.springframework.context.ApplicationContext;
@@ -36,9 +34,6 @@ public class App {
         App q = new App();
         try {
             ApplicationContext context = q.start();
-            ConsoleFactory factory = (ConsoleFactory) context.getBean("consoleFactory");
-            CommandShellImpl commandProcessor = (CommandShellImpl) context.getBean("commandProcessor");
-            factory.registerCommandProcessor(commandProcessor);
 
         } catch (Throwable t) {
             log.error("Error starting application: ", t);

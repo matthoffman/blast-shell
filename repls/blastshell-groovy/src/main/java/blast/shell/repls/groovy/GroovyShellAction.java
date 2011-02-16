@@ -1,13 +1,9 @@
-package blast.shell.beanshell;
+package blast.shell.repls.groovy;
 
 import groovy.lang.Binding;
 import groovy.ui.InteractiveShell;
-import jline.ANSIBuffer;
 import org.apache.felix.gogo.commands.Command;
 import org.apache.karaf.shell.console.AbstractAction;
-import org.fusesource.jansi.AnsiConsole;
-import org.fusesource.jansi.AnsiRenderer;
-import org.fusesource.jansi.AnsiString;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.BeanFactoryAware;
@@ -47,11 +43,11 @@ public class GroovyShellAction extends AbstractAction implements BeanFactoryAwar
         binding.setVariable("out", out);
         binding.setVariable("applicationContext", beanFactory);
         if (beanFactory instanceof ListableBeanFactory) {
-            String[] beanNames = ((ListableBeanFactory)beanFactory).getBeanDefinitionNames();
+            String[] beanNames = ((ListableBeanFactory) beanFactory).getBeanDefinitionNames();
             for (String beanName : beanNames) {
                 try {
                     binding.setVariable(beanName, beanFactory.getBean(beanName));
-                }catch (Throwable t) {
+                } catch (Throwable t) {
                     log.debug("Problem filling Groovy Shell bindings; this is non-terminal: ", t);
                 }
             }

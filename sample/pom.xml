@@ -12,29 +12,6 @@
     <artifactId>shell-sample</artifactId>
     <build>
         <plugins>
-            <!--
-           <plugin>
-              <groupId>org.codehaus.mojo</groupId>
-              <artifactId>exec-maven-plugin</artifactId>
-              <version>1.1.1</version>
-              <executions>
-                  <execution>
-                      <goals>
-                          <goal>exec</goal>
-                      </goals>
-                      <phase />
-                  </execution>
-              </executions>
-              <configuration>
-                  <executable>java</executable>
-                  <arguments>
-                      <argument>-classpath</argument>
-                      <classpath />
-                      <argument>blast.shell.App</argument>
-                  </arguments>
-              </configuration>
-            </plugin>
-            -->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
@@ -48,7 +25,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <mainClass>blast.shell.App</mainClass>
+                    <mainClass>blast.shell.SampleSshApp</mainClass>
                 </configuration>
             </plugin>
         </plugins>

@@ -39,7 +39,39 @@ I'm not aware of anything here that requires Java 1.6, so you're welcome to expe
 Integrating the Shell
 --------------------
 
-(TODO)
+Blast Shell is split into a number of modules, so you can embed as much or as little as you like. It's still not a lightweight
+project, because of the volume of dependencies it totes along (all of Apache Karaf, which is doing the real work), but
+much of that can be excluded.  I aim to have more intelligent maven exclusions in future versions.
+
+### Embedding with Spring
+
+See the SampleSshApp class in shell-samples for an example of embedded usage.  If you use Spring in your application,
+you just need to include Blast Shell's Spring contexts, or copy the beans into your contexts.
+By default, the Blast Shell beans expect a few properties to be defined and injected using Spring's PropertyPlaceholderConfigurer mechanism:
+
+* welcome:  This is a string that users will see when they log in.  See an example in core/src/main/filtered-resources/branding.properties, or a prettier example in /org/apache/karaf/shell/console/branding.properties within the org.apache.karaf.shell.console-2.1.3.jar jar
+* sshPort:  This is the port the SSH server will listen on.
+* sshRealm:  This is used by the SSH server's authentication mechanism; it is only important if you're using JAAS authentication or something else that uses realms.
+* hostKey:  The name of a file (like "host.key") that the SSH server will use as its host key.  It will generate a file of this name if it doesn't already exist.
+
+The sample server loads a context file called property-context.xml which, in turn, loads a couple default property files (ssh.properties and branding.properties):
+
+    <bean name="propertyPlaceholderConfigurer"
+          class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <util:list>
+                <value>classpath:META-INF/shell/ssh.properties</value>
+                <value>classpath:branding/branding.properties</value>
+            </util:list>
+        </property>
+    </bean>
+
+### Embedding with Guice
+TBD...it's conceptually very similar to the Spring method, of course.
+See above, in the "Purpose" section, for an overview of embedding without Spring.
+
+### Embedding without Spring or Guice
+Also TBD.  Again, see above, in the "Purpose" section, for an overview of embedding without Spring.
 
 
 Extensibility

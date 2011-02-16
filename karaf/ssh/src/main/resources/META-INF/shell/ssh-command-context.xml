@@ -5,7 +5,10 @@
        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.5.xsd">
 
-    <cm:property-placeholder location="classpath:META-INF/shell/ssh.properties"/>
+    <bean name="sshPropertyPlaceholderConfigurer"
+          class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="location" value="classpath:META-INF/shell/ssh.properties"/>
+    </bean>
 
     <bean name="blueprintContainerAwarePostProcessor" class="blast.shell.osgi.BlueprintContainerAwarePostProcessor"/>
 
@@ -23,8 +26,8 @@
     <bean id="sshServer" class="org.apache.sshd.SshServer" factory-method="setUpDefaultServer" scope="prototype">
         <property name="port" value="${sshPort}"/>
         <property name="shellFactory">
-            <bean class="org.apache.karaf.shell.ssh.ShellFactoryImpl">
-                <property name="commandProcessor" ref="commandProcessor"/>
+            <bean class="blast.shell.karaf.ssh.BlastShellFactoryImpl">
+                <property name="consoleFactory" ref="consoleFactory"/>
             </bean>
         </property>
         <property name="commandFactory">

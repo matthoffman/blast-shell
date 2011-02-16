@@ -14,19 +14,10 @@
         <property name="commandShell" ref="commandProcessor"/>
     </bean>
 
-    <bean id="consoleFactory" class="blast.shell.jline.ConsoleFactory">
-        <property name="start" value="true"/>
-        <property name="terminalFactory" ref="terminalFactory"/>
+    <bean id="consoleFactory" class="blast.shell.jline.BlastConsoleFactory">
         <property name="commandRegistry" ref="commandRegistry"/>
+        <property name="commandProcessor" ref="commandProcessor"/>
+        <property name="welcomeMessage" value="${welcome}"/>
     </bean>
-
-    <bean id="terminal"
-          factory-bean="terminalFactory"
-          factory-method="getTerminal"/>
-
-    <bean id="terminalFactory" class="org.apache.karaf.shell.console.jline.TerminalFactory"
-          init-method="init"
-          destroy-method="destroy"/>
-
 
 </beans>
