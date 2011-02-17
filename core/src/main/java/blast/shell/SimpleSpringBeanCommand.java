@@ -9,14 +9,16 @@ import org.apache.felix.gogo.commands.basic.AbstractCommand;
  */
 public class SimpleSpringBeanCommand extends AbstractCommand {
 
-    Action actionBean;
+    ActionFactory actionFactory;
+    String beanName;
 
-    public SimpleSpringBeanCommand(Action actionBean) {
-        this.actionBean = actionBean;
+    public SimpleSpringBeanCommand(ActionFactory factory, String actionBeanName) {
+        this.beanName = actionBeanName;
+        this.actionFactory = factory;
     }
 
     @Override
     public Action createNewAction() {
-        return actionBean;
+        return actionFactory.getAction(beanName);
     }
 }

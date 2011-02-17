@@ -6,6 +6,10 @@ import org.apache.felix.gogo.runtime.shell.CommandSessionImpl;
 import org.apache.felix.gogo.runtime.shell.CommandShellImpl;
 import org.osgi.service.command.CommandSession;
 import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.BeanFactory;
+import org.springframework.beans.factory.BeanFactoryAware;
+import org.springframework.beans.factory.ListableBeanFactory;
+import org.springframework.beans.factory.annotation.Required;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 
 import java.util.HashMap;
@@ -16,14 +20,20 @@ import java.util.Set;
 /**
  * Serves as a registry for commands -- it detects when command objects are loaded by Spring.
  */
-public class CommandRegistry implements BeanPostProcessor {
+public class CommandRegistry implements BeanPostProcessor, BeanFactoryAware {
     CommandShellImpl commandShell;
 
     Map<String, Action> commandRegistry = new HashMap<String, Action>();
-
+    private ListableBeanFactory beanFactory;
+    protected ActionFactory actionFactory;
 
     @Override
     public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
+        return bean;
+    }
+
+    @Override
+    public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
         if (bean instanceof Action) {
             commandRegistry.put(beanName, (Action) bean);
         }
@@ -31,24 +41,20 @@ public class CommandRegistry implements BeanPostProcessor {
         return bean;
     }
 
-    @Override
-    public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
-        return bean;
-    }
-
-    private String getName(Object bean) {
-
+    private Tuple<String, Object> getName(Object bean, String beanName) {
         if (bean.getClass().isAnnotationPresent(Command.class)) {
             Command command = bean.getClass().getAnnotation(Command.class);
             String scope = command.scope();
             String function = command.name();
             if (scope != null && function != null) {
+                Object obj;
                 if (bean instanceof Action) {
-                    commandShell.addCommand(scope, new SimpleSpringBeanCommand((Action) bean), function);
+                    obj = new SimpleSpringBeanCommand(actionFactory, beanName);
                 } else {
-                    commandShell.addCommand(scope, bean, function);
+                    obj = bean;
                 }
-                return scope + ":" + function;
+                commandShell.addCommand(scope, obj, function);
+                return new Tuple<String, Object>(scope + ":" + function, obj);
             }
         }
         return null;
@@ -62,14 +68,42 @@ public class CommandRegistry implements BeanPostProcessor {
         this.commandShell = commandShell;
     }
 
+    @SuppressWarnings({"unchecked"})
     public void registerCommandsInSession(CommandSession session) {
+        // it would be more proper to do "getBeanNamesOfType(Action.class)",
+        // then for each bean name, call the action factory.  But this is quicker.
+        Map beans = beanFactory.getBeansOfType(Action.class);
+        commandRegistry.putAll(beans);// unchecked, sadly...
         Set<String> commandNames = new HashSet<String>();
-        for (Action action : commandRegistry.values()) {
-            String name = getName(action);
-            commandNames.add(name);
-            session.put(name, new SimpleSpringBeanCommand(action));
+        for (Map.Entry<String, Action> entry : commandRegistry.entrySet()) {
+            Tuple<String, Object> commandNameTuple = getName(entry.getValue(), entry.getKey());
+            commandNames.add(commandNameTuple.key);
+            session.put(commandNameTuple.key, commandNameTuple.value);
         }
         session.put(CommandSessionImpl.COMMANDS, commandNames);
 
+    }
+
+    @Override
+    public void setBeanFactory(BeanFactory beanFactory) throws BeansException {
+        if (!(beanFactory instanceof ListableBeanFactory)) {
+            throw new IllegalArgumentException("Bean Factory must implement ListableBeanFactory");
+        }
+        this.beanFactory = (ListableBeanFactory) beanFactory;
+    }
+
+    @Required
+    public void setActionFactory(ActionFactory actionFactory) {
+        this.actionFactory = actionFactory;
+    }
+
+    private class Tuple<T1, T2> {
+        T1 key;
+        T2 value;
+
+        private Tuple(T1 key, T2 value) {
+            this.key = key;
+            this.value = value;
+        }
     }
 }

@@ -5,7 +5,8 @@
        http://www.springframework.org/schema/beans/spring-beans-2.5.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
     <!-- Note that this doesn't seem to let us specify the beans explicitly, to do explicit wiring; we need to do annotation-based wiring for any beans that this finds -->
-    <cm:component-scan base-package="blast.shell.karaf.commands">
+    <cm:component-scan base-package="blast.shell.karaf.commands"
+                       scope-resolver="blast.shell.AlwaysPrototypeScopeResolver">
         <cm:include-filter type="annotation" expression="org.apache.felix.gogo.commands.Command"/>
     </cm:component-scan>
 

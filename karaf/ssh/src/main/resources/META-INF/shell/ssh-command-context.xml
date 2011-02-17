@@ -12,13 +12,13 @@
 
     <bean name="blueprintContainerAwarePostProcessor" class="blast.shell.osgi.BlueprintContainerAwarePostProcessor"/>
 
-    <bean name="sshCommand" class="org.apache.karaf.shell.ssh.SshAction">
+    <bean name="sshCommand" class="org.apache.karaf.shell.ssh.SshAction" scope="prototype">
         <property name="sshClientId" value="sshClient"/>
     </bean>
 
-    <bean name="sshServerCommand" class="org.apache.karaf.shell.ssh.SshServerAction">
-        <property name="sshServerId" value="sshServer"/>
-    </bean>
+    <!--<bean name="sshServerCommand" class="org.apache.karaf.shell.ssh.SshServerAction">-->
+    <!--<property name="sshServerId" value="sshServer"/>-->
+    <!--</bean>-->
 
     <bean id="sshClient" class="org.apache.sshd.SshClient" factory-method="setUpDefaultClient" scope="prototype">
     </bean>

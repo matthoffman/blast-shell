@@ -9,7 +9,7 @@ standalone app as well.
 Very little of this project is original work; it's mainly a thin wrapper around Karaf.
 
 * In principle, this could easily be adapted to Guice-based or other non-Spring-based projects. One of the core classes
-here is blast.shell.SpringCommandShell, which uses Spring to look up available commands at runtime. The normal Karaf
+here is blast.shell.CommandRegistry, which uses Spring to look up available commands at runtime. The normal Karaf
 org.apache.karaf.shell.console.Main class uses a resource-loader-like discovery mechanism: define your classes in
 "META-INF/services/org/apache/karaf/shell/commands", and it will pick them up and load them using ClassLoader.loadClass().
 It would be simple to write a runtime registration option and Guice-based discovery mechanism as well.

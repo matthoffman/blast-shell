@@ -1,3 +1,6 @@
+0.3: Changed commands to always be prototypes, and changed around the SimpleSpringBeanCommand wrapper to instantiate a
+new one on every call.  That's what we want, really.
+Added a new ThreadDump command that has similar functionality to a kill -3.
 0.2: Refactored some classes (pulling ShellFactoryImpl out as BlastShellFactoryImpl and creating the ConsoleFactory
 interface, for example) in order to let users override the branding and prompt for their SSH shell.
 Fixed the "mvn exec:java" plugin in shell-sample.

@@ -6,12 +6,18 @@
 
     <bean name="threadIo" class="org.apache.felix.gogo.runtime.threadio.ThreadIOImpl"/>
 
-    <bean name="commandProcessor" class="blast.shell.SpringCommandShell">
+    <bean name="commandProcessor" class="org.apache.felix.gogo.runtime.shell.CommandShellImpl">
         <property name="threadio" ref="threadIo"/>
     </bean>
 
     <bean id="commandRegistry" class="blast.shell.CommandRegistry">
         <property name="commandShell" ref="commandProcessor"/>
+        <property name="actionFactory">
+            <bean class="org.springframework.beans.factory.config.ServiceLocatorFactoryBean">
+                <property name="serviceLocatorInterface" value="blast.shell.ActionFactory"/>
+            </bean>
+        </property>
+
     </bean>
 
     <bean id="consoleFactory" class="blast.shell.jline.BlastConsoleFactory">
