@@ -5,7 +5,7 @@
     <parent>
         <groupId>blast</groupId>
         <artifactId>blast-shell</artifactId>
-        <version>0.3-SNAPSHOT</version>
+        <version>0.4-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -44,13 +44,13 @@
             <version>${parent.version}</version>
         </dependency>
 
-
+        <!--
         <dependency>
             <groupId>blast</groupId>
             <artifactId>blast-shell-beanshell</artifactId>
             <version>${parent.version}</version>
         </dependency>
-
+        -->
         <dependency>
             <groupId>blast</groupId>
             <artifactId>blast-shell-groovy</artifactId>
