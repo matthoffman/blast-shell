@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>blast</groupId>
-    <artifactId>shell</artifactId>
+    <artifactId>blast-shell</artifactId>
     <packaging>pom</packaging>
     <version>0.3-SNAPSHOT</version>
 

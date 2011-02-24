@@ -4,12 +4,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <groupId>blast</groupId>
-        <artifactId>shell</artifactId>
+        <artifactId>blast-shell</artifactId>
         <version>0.3-SNAPSHOT</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>shell-karaf</artifactId>
+    <artifactId>blast-shell-karaf</artifactId>
     <packaging>pom</packaging>
     <modules>
         <module>ssh</module>

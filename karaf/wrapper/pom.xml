@@ -3,18 +3,18 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>shell-karaf</artifactId>
+        <artifactId>blast-shell-karaf</artifactId>
         <groupId>blast</groupId>
         <version>0.3-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>shell-karaf-wrapper</artifactId>
+    <artifactId>blast-shell-karaf-wrapper</artifactId>
 
     <dependencies>
         <dependency>
             <groupId>blast</groupId>
-            <artifactId>shell-core</artifactId>
+            <artifactId>blast-shell-core</artifactId>
             <version>${parent.version}</version>
         </dependency>
 
