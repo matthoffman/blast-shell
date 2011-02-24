@@ -3,7 +3,7 @@
     <parent>
         <groupId>blast</groupId>
         <artifactId>blast-shell</artifactId>
-        <version>0.3</version>
+        <version>0.4-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -33,26 +33,26 @@
         <dependency>
             <groupId>blast</groupId>
             <artifactId>blast-shell-karaf-commands</artifactId>
-            <version>0.3</version>
+            <version>0.4-SNAPSHOT</version>
         </dependency>
 
         <dependency>
             <groupId>blast</groupId>
             <artifactId>blast-shell-karaf-ssh</artifactId>
-            <version>0.3</version>
+            <version>0.4-SNAPSHOT</version>
         </dependency>
 
 
         <dependency>
             <groupId>blast</groupId>
             <artifactId>blast-shell-beanshell</artifactId>
-            <version>0.3</version>
+            <version>0.4-SNAPSHOT</version>
         </dependency>
 
         <dependency>
             <groupId>blast</groupId>
             <artifactId>blast-shell-groovy</artifactId>
-            <version>0.3</version>
+            <version>0.4-SNAPSHOT</version>
         </dependency>
 
         <dependency>
