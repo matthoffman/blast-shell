@@ -18,12 +18,19 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Serves as a registry for commands -- it detects when command objects are loaded by Spring.
  */
 public class CommandRegistry implements BeanPostProcessor, BeanFactoryAware {
+    Logger log = LoggerFactory.getLogger(CommandRegistry.class);
+    
     CommandShellImpl commandShell;
 
+
+    
     Map<String, Action> commandRegistry = new HashMap<String, Action>();
     private ListableBeanFactory beanFactory;
     protected ActionFactory actionFactory;
@@ -53,7 +60,8 @@ public class CommandRegistry implements BeanPostProcessor, BeanFactoryAware {
                    command = target.getClass().getAnnotation(Command.class);
                 }
             } catch (Exception e) {
-                e.printStackTrace(); // TODO: improve error handling/logging
+                log.warn("Error while trying to determine if Advised bean "+ beanName+" is a Command.  This is "+
+                    " non-terminal, but this bean will not be exposed as a command.  Error was:" , e);
             }
         }
 
