@@ -5,6 +5,7 @@ import org.apache.felix.gogo.commands.Command;
 import org.apache.felix.gogo.runtime.shell.CommandSessionImpl;
 import org.apache.felix.gogo.runtime.shell.CommandShellImpl;
 import org.osgi.service.command.CommandSession;
+import org.springframework.aop.framework.Advised;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.BeanFactoryAware;
@@ -42,8 +43,21 @@ public class CommandRegistry implements BeanPostProcessor, BeanFactoryAware {
     }
 
     private Tuple<String, Object> getName(Object bean, String beanName) {
+        Command command = null;
         if (bean.getClass().isAnnotationPresent(Command.class)) {
-            Command command = bean.getClass().getAnnotation(Command.class);
+            command = bean.getClass().getAnnotation(Command.class);
+        } else if (bean instanceof Advised) {
+            try {
+                Object target = ((Advised) bean).getTargetSource().getTarget();
+                if (target.getClass().isAnnotationPresent(Command.class)) {
+                   command = target.getClass().getAnnotation(Command.class);
+                }
+            } catch (Exception e) {
+                e.printStackTrace(); // TODO: improve error handling/logging
+            }
+        }
+
+        if(command != null) {
             String scope = command.scope();
             String function = command.name();
             if (scope != null && function != null) {
@@ -57,6 +71,7 @@ public class CommandRegistry implements BeanPostProcessor, BeanFactoryAware {
                 return new Tuple<String, Object>(scope + ":" + function, obj);
             }
         }
+
         return null;
     }
 
