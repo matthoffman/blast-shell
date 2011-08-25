@@ -5,6 +5,8 @@ import org.apache.felix.gogo.commands.Command;
 import org.apache.felix.gogo.runtime.shell.CommandSessionImpl;
 import org.apache.felix.gogo.runtime.shell.CommandShellImpl;
 import org.osgi.service.command.CommandSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.aop.framework.Advised;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanFactory;
@@ -18,19 +20,15 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * Serves as a registry for commands -- it detects when command objects are loaded by Spring.
  */
 public class CommandRegistry implements BeanPostProcessor, BeanFactoryAware {
     Logger log = LoggerFactory.getLogger(CommandRegistry.class);
-    
+
     CommandShellImpl commandShell;
 
 
-    
     Map<String, Action> commandRegistry = new HashMap<String, Action>();
     private ListableBeanFactory beanFactory;
     protected ActionFactory actionFactory;
@@ -57,15 +55,15 @@ public class CommandRegistry implements BeanPostProcessor, BeanFactoryAware {
             try {
                 Object target = ((Advised) bean).getTargetSource().getTarget();
                 if (target.getClass().isAnnotationPresent(Command.class)) {
-                   command = target.getClass().getAnnotation(Command.class);
+                    command = target.getClass().getAnnotation(Command.class);
                 }
             } catch (Exception e) {
-                log.warn("Error while trying to determine if Advised bean "+ beanName+" is a Command.  This is "+
-                    " non-terminal, but this bean will not be exposed as a command.  Error was:" , e);
+                log.warn("Error while trying to determine if Advised bean " + beanName + " is a Command.  This is " +
+                        " non-terminal, but this bean will not be exposed as a command.  Error was:", e);
             }
         }
 
-        if(command != null) {
+        if (command != null) {
             String scope = command.scope();
             String function = command.name();
             if (scope != null && function != null) {

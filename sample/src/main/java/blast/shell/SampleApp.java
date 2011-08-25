@@ -1,13 +1,8 @@
 package blast.shell;
 
-import org.apache.log4j.Logger;
-import org.apache.log4j.xml.DOMConfigurator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
-import org.springframework.util.ResourceUtils;
-import org.springframework.util.SystemPropertyUtils;
-
-import java.io.File;
-import java.io.FileNotFoundException;
 
 /**
  * Hello world!
@@ -16,14 +11,7 @@ public class SampleApp {
 
     public static void main(String[] args) {
 
-        try {
-            initLogging();
-        } catch (FileNotFoundException e) {
-            System.err.println("Error initializing logging: ");
-            e.printStackTrace();
-            return;
-        }
-        Logger log = Logger.getLogger(App.class);
+        Logger log = LoggerFactory.getLogger(App.class);
 
         App app = new App();
         try {
@@ -34,16 +22,6 @@ public class SampleApp {
             log.error("Exiting.");
             System.exit(1);
         }
-    }
-
-    private static void initLogging() throws FileNotFoundException {
-        String location = System.getProperty("log4j.configuration", "classpath:log4j.xml");
-        String resolvedLocation = SystemPropertyUtils.resolvePlaceholders(location);
-        File file = ResourceUtils.getFile(resolvedLocation);
-        if (!file.exists()) {
-            throw new FileNotFoundException("Log4j config file [" + resolvedLocation + "] not found");
-        }
-        DOMConfigurator.configureAndWatch(file.getAbsolutePath(), 10 * 1000 /* 10 seconds */);
     }
 
 }

@@ -21,9 +21,10 @@ package blast.shell.jline;
 import blast.shell.CommandRegistry;
 import jline.Terminal;
 import org.apache.karaf.shell.console.jline.Console;
-import org.apache.log4j.Logger;
 import org.osgi.service.command.CommandProcessor;
 import org.osgi.service.command.CommandSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.util.ResourceUtils;
 
@@ -37,7 +38,7 @@ import java.util.Properties;
  * Console implementation of our choice.
  */
 public class BlastConsoleFactory implements ConsoleFactory {
-    private static final Logger log = Logger.getLogger(BlastConsoleFactory.class);
+    private static final Logger log = LoggerFactory.getLogger(BlastConsoleFactory.class);
 
     private CommandRegistry commandRegistry;
     private CommandProcessor commandProcessor;
