@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration scan="true">
+    <statusListener class="ch.qos.logback.core.status.OnConsoleStatusListener"/>
+
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <param name="Target" value="System.out"/>
+        <encoder>
+            <pattern>%d %-4r [%t] %-5p %c - %m%n</pattern>
+        </encoder>
+    </appender>
+
+
+    <!-- Default log level for all our classes -->
+    <logger name="blast.shell">
+        <level value="DEBUG"/>
+    </logger>
+
+    <!-- Quiet down some chatty dependencies -->
+    <logger name="org.springframework">
+        <level value="WARN"/>
+    </logger>
+
+
+    <root level="WARN">
+        <appender-ref ref="STDOUT"/>
+    </root>
+</configuration>
