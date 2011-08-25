@@ -57,7 +57,7 @@
         <!--<felix.gogo.version>0.6.1</felix.gogo.version>-->
         <!-- turns out, we can't use gogo 0.4.0 either: this version of Karaf embeds its own version instead. -->
         <!--<felix.gogo.version>0.4.0</felix.gogo.version>-->
-        <karaf.version>2.1.3</karaf.version>
+        <karaf.version>2.1.6</karaf.version>
         <jansi.version>1.5</jansi.version>
         <slf4j.version>1.6.1</slf4j.version>
     </properties>
