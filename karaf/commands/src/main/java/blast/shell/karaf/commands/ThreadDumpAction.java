@@ -128,8 +128,4 @@ public class ThreadDumpAction extends AbstractAction {
         }
         return returnString.toString();
     }
-
-    protected void println(String s) {
-        this.session.getConsole().println(s);
-    }
 }

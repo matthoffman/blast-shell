@@ -8,3 +8,7 @@ vs. a manually-created one.
 4.) Log a Karaf bug around the ArgumentCompleter (ArrayOutOfBoundsException if there are no ArgumentCompleters
     registered...we got around this by making SimpleSpringBeanCommand an ArgumentCompleter.  That's how Karaf gets
     around it too, with the base BlueprintCommand.
+5.) Figure out authentication: Karaf now comes with a KarafJaasPasswordAuthenticator; perhaps we can interact with that
+    and give ourselves a basic JAAS setup?  Would be nice to make it easy for users to plug into some type of auth
+    framework they already have.  And people will doubtless want role-based control, which JAAS will provide (and our
+    simple password authenticator will not...no authorization included).
