@@ -21,11 +21,11 @@ package blast.shell.karaf.ssh;
 
 import blast.shell.jline.ConsoleFactory;
 import jline.Terminal;
+import org.apache.felix.service.command.CommandSession;
 import org.apache.karaf.shell.console.jline.Console;
 import org.apache.karaf.shell.ssh.SshTerminal;
 import org.apache.sshd.common.Factory;
 import org.apache.sshd.server.*;
-import org.osgi.service.command.CommandSession;
 import org.springframework.beans.factory.annotation.Required;
 
 import java.io.*;
@@ -97,8 +97,8 @@ public class BlastShellFactoryImpl implements Factory<Command> {
                 }
                 env.addSignalListener(new SignalListener() {
                     public void signal(Signal signal) {
-                        session.put("LINES", Integer.toString(terminal.getTerminalHeight()));
-                        session.put("COLUMNS", Integer.toString(terminal.getTerminalWidth()));
+                        session.put("LINES", Integer.toString(terminal.getHeight()));
+                        session.put("COLUMNS", Integer.toString(terminal.getWidth()));
                     }
                 }, Signal.WINCH);
                 new Thread(console).start();

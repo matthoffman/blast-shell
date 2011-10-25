@@ -20,9 +20,9 @@ package blast.shell.jline;
 
 import blast.shell.CommandRegistry;
 import jline.Terminal;
+import org.apache.felix.service.command.CommandProcessor;
+import org.apache.felix.service.command.CommandSession;
 import org.apache.karaf.shell.console.jline.Console;
-import org.osgi.service.command.CommandProcessor;
-import org.osgi.service.command.CommandSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Required;
@@ -60,8 +60,8 @@ public class BlastConsoleFactory implements ConsoleFactory {
 
         final CommandSession session = console.getSession();
         session.put("APPLICATION", System.getProperty("karaf.name", "root"));
-        session.put("LINES", Integer.toString(terminal.getTerminalHeight()));
-        session.put("COLUMNS", Integer.toString(terminal.getTerminalWidth()));
+        session.put("LINES", Integer.toString(terminal.getHeight()));
+        session.put("COLUMNS", Integer.toString(terminal.getWidth()));
         session.put(".jline.terminal", terminal);
         commandRegistry.registerCommandsInSession(session);
         return console;

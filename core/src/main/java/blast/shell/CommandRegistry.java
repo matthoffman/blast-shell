@@ -2,9 +2,9 @@ package blast.shell;
 
 import org.apache.felix.gogo.commands.Action;
 import org.apache.felix.gogo.commands.Command;
-import org.apache.felix.gogo.runtime.shell.CommandSessionImpl;
-import org.apache.felix.gogo.runtime.shell.CommandShellImpl;
-import org.osgi.service.command.CommandSession;
+import org.apache.felix.gogo.runtime.CommandProcessorImpl;
+import org.apache.felix.gogo.runtime.CommandSessionImpl;
+import org.apache.felix.service.command.CommandSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.aop.framework.Advised;
@@ -26,7 +26,7 @@ import java.util.Set;
 public class CommandRegistry implements BeanPostProcessor, BeanFactoryAware {
     Logger log = LoggerFactory.getLogger(CommandRegistry.class);
 
-    CommandShellImpl commandShell;
+    CommandProcessorImpl commandShell;
 
 
     Map<String, Action> commandRegistry = new HashMap<String, Action>();
@@ -81,11 +81,11 @@ public class CommandRegistry implements BeanPostProcessor, BeanFactoryAware {
         return null;
     }
 
-    public CommandShellImpl getCommandShell() {
+    public CommandProcessorImpl getCommandShell() {
         return commandShell;
     }
 
-    public void setCommandShell(CommandShellImpl commandShell) {
+    public void setCommandShell(CommandProcessorImpl commandShell) {
         this.commandShell = commandShell;
     }
 

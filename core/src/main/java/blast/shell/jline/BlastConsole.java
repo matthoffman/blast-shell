@@ -1,8 +1,8 @@
 package blast.shell.jline;
 
 import jline.Terminal;
+import org.apache.felix.service.command.CommandProcessor;
 import org.apache.karaf.shell.console.jline.Console;
-import org.osgi.service.command.CommandProcessor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

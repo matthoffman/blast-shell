@@ -6,8 +6,8 @@
 
     <bean name="threadIo" class="org.apache.felix.gogo.runtime.threadio.ThreadIOImpl"/>
 
-    <bean name="commandProcessor" class="org.apache.felix.gogo.runtime.shell.CommandShellImpl">
-        <property name="threadio" ref="threadIo"/>
+    <bean name="commandProcessor" class="org.apache.felix.gogo.runtime.CommandProcessorImpl">
+        <constructor-arg ref="threadIo"/>
     </bean>
 
     <bean id="commandRegistry" class="blast.shell.CommandRegistry">
