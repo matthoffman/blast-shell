@@ -12,7 +12,7 @@ public class AlwaysPrototypeScopeResolver implements ScopeMetadataResolver {
     @Override
     public ScopeMetadata resolveScopeMetadata(BeanDefinition beanDefinition) {
         ScopeMetadata meta = new ScopeMetadata();
-        meta.setScopedProxyMode(ScopedProxyMode.INTERFACES);
+        meta.setScopedProxyMode(ScopedProxyMode.NO);
         meta.setScopeName("prototype");
         return meta;
     }
