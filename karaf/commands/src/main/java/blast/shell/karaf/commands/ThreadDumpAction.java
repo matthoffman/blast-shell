@@ -26,6 +26,8 @@ public class ThreadDumpAction extends AbstractAction {
         if (grep != null) {
             pattern = Pattern.compile(grep);
         }
+        StringBuilder returnString = new StringBuilder();
+
         ThreadMXBean threadMXBean = ManagementFactory.getThreadMXBean();
         ThreadInfo[] allThreads = threadMXBean.dumpAllThreads(threadMXBean.isObjectMonitorUsageSupported(), threadMXBean.isSynchronizerUsageSupported());
         for (ThreadInfo thread : allThreads) {
@@ -34,76 +36,81 @@ public class ThreadDumpAction extends AbstractAction {
                     continue;
                 }
             }
-            println("**********************************************************************");
+            returnString.append("**********************************************************************\n");
             if (!summary) {
-                println("Thread " + thread.toString());
+                returnString.append("Thread " + thread.toString()).append("\n");
             } else {
-                println(getThreadDisplayName(thread));
+                returnString.append(getThreadDisplayName(thread)).append("\n");
             }
             if (threadMXBean.isThreadCpuTimeSupported() && threadMXBean.isThreadCpuTimeEnabled()) {
                 long userTimeMs = threadMXBean.getThreadUserTime(thread.getThreadId()) / 1000;// it's in nanos
                 long cpuTimeMs = threadMXBean.getThreadCpuTime(thread.getThreadId()) / 1000;  // it's in nanos
                 // i'm seriously considering pulling in JodaTime or Commons Lang for period formatting here:
-                println(" - user time: " + userTimeMs + "ms, system time: " + (cpuTimeMs - userTimeMs) + "ms");
+                returnString.append(" - user time: " + userTimeMs + "ms, system time: " + (cpuTimeMs - userTimeMs) + "ms").append("\n");
             }
             if (summary) {
-                printLocksHeld(thread);
-                printLocksWaiting(thread);
+                returnString.append(printLocksHeld(thread)).append("\n");
+                returnString.append(printLocksWaiting(thread)).append("\n");
             }
             StringBuilder str = new StringBuilder(" - waiting " + thread.getWaitedCount() + " times");
             if (contentionMonitoringEnabled(threadMXBean)) {
-                str.append("for ").append(thread.getWaitedTime()).append("ms");
+                str.append("for ").append(thread.getWaitedTime()).append("ms").append("\n");
             }
             if (contentionMonitoringEnabled(threadMXBean)) {
-                println(" - blocked " + thread.getBlockedCount() + " times for " + thread.getBlockedTime() + "ms");
+                returnString.append(" - blocked " + thread.getBlockedCount() + " times for " + thread.getBlockedTime() + "ms").append("\n");
             }
-            println(str.toString());
+            returnString.append(str.toString()).append("\n");
 
-            println("");
+            returnString.append("\n");
 
         }
-        println("");
+        returnString.append("\n");
 
-        printDeadlockInfo(threadMXBean);
+        returnString.append(printDeadlockInfo(threadMXBean)).append("\n");
 
-        return null;
+        return returnString.toString();
     }
 
     private boolean contentionMonitoringEnabled(ThreadMXBean threadMXBean) {
         return threadMXBean.isThreadContentionMonitoringSupported() && threadMXBean.isThreadContentionMonitoringEnabled();
     }
 
-    private void printDeadlockInfo(ThreadMXBean threadMXBean) {
+    private String printDeadlockInfo(ThreadMXBean threadMXBean) {
+        StringBuilder returnString = new StringBuilder();
         if (threadMXBean.isSynchronizerUsageSupported()) {
             long[] threadIds = threadMXBean.findDeadlockedThreads();
             if (threadIds != null && threadIds.length > 0) {
-                println("Deadlocks detected!");
+                returnString.append("Deadlocks detected!").append("\n");
                 for (long threadId : threadIds) {
                     ThreadInfo thread = threadMXBean.getThreadInfo(threadId);
-                    println(getThreadDisplayName(thread));
+                    returnString.append(getThreadDisplayName(thread)).append("\n");
                     printLocksWaiting(thread);
                     printLocksHeld(thread);
                 }
             }
         } else {
-            println("deadlock detection not supported by this JVM");
+            returnString.append("deadlock detection not supported by this JVM").append("\n");
         }
+        return returnString.toString();
     }
 
     private String getThreadDisplayName(ThreadInfo thread) {
         return "Thread " + thread.getThreadName() + " (" + thread.getThreadState() + "):" + ((thread.isSuspended()) ? "SUSPENDED" : "");
     }
 
-    private void printLocksHeld(ThreadInfo thread) {
+    private String printLocksHeld(ThreadInfo thread) {
+        StringBuilder returnString = new StringBuilder();
         if (thread.getLockedSynchronizers().length > 0) {
-            println(" - currently locking:");
+            returnString.append(" - currently locking:").append("\n");
             for (LockInfo lockInfo : thread.getLockedSynchronizers()) {
-                println("    - " + lockInfo.toString());
+                returnString.append("    - " + lockInfo.toString()).append("\n");
             }
         }
+        return returnString.toString();
     }
 
-    private void printLocksWaiting(ThreadInfo thread) {
+    private String printLocksWaiting(ThreadInfo thread) {
+        StringBuilder returnString = new StringBuilder();
         if (thread.getLockInfo() != null) {
             String str = " - waiting on lock " + thread.getLockName();
             if (thread.getLockOwnerName() != null) {
@@ -111,14 +118,15 @@ public class ThreadDumpAction extends AbstractAction {
             } else if (thread.getLockOwnerId() > 0) {
                 str += " which is held by " + thread.getLockOwnerId();
             }
-            println(str);
+            returnString.append(str).append("\n");
             if (thread.getLockedMonitors() != null && thread.getLockedMonitors().length > 0) {
                 MonitorInfo[] monitorInfo = thread.getLockedMonitors();
                 for (MonitorInfo info : monitorInfo) {
-                    println(" - locked <" + info.getIdentityHashCode() + "> (a " + info.getClassName() + ")");
+                    returnString.append(" - locked <" + info.getIdentityHashCode() + "> (a " + info.getClassName() + ")").append("\n");
                 }
             }
         }
+        return returnString.toString();
     }
 
     protected void println(String s) {

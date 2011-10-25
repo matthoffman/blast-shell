@@ -81,6 +81,17 @@ Then register that bean with Spring.  Blast Shell will pick up any Spring bean i
 action in the shell.
 
 
+Implementation Notes
+--------------------
+
+blast-shell contains a "BlueprintContainerAwarePostProcessor", a Spring bean post-processor, which finds beans that implements
+"BlueprintContainerAware" and feeds them the Spring application context, wrapped in a thin compatibility wrapper (SpringBackedBlueprintContainer).
+This is kind of ironic, since BlueprintContainer was patterned after Spring originally. But it lets us use some Karaf
+commands which are expecting a BlueprintContainer but are functional with a normal Spring context.
+
+We also override Karaf's ShellFactory, pretty much only in order to customize the branding.
+
+
 Similar Projects
 ----------------
 If you're looking at this, be sure to also check out Sonatype's gshell project, also on Github. It bears some similarity

@@ -22,6 +22,7 @@ import blast.shell.CommandRegistry;
 import jline.Terminal;
 import org.apache.felix.service.command.CommandProcessor;
 import org.apache.felix.service.command.CommandSession;
+import org.apache.felix.service.command.Function;
 import org.apache.karaf.shell.console.jline.Console;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,6 +32,7 @@ import org.springframework.util.ResourceUtils;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.io.PrintStream;
+import java.util.List;
 import java.util.Properties;
 
 /**
@@ -47,7 +49,7 @@ public class BlastConsoleFactory implements ConsoleFactory {
     String welcomeMessageFile = null;
 
     @Override
-    public Console createConsole(InputStream in, PrintStream out, PrintStream err, Terminal terminal, Runnable closeCallback) throws Exception {
+    public Console createConsole(InputStream in, PrintStream out, PrintStream err, final Terminal terminal, Runnable closeCallback) throws Exception {
         BlastConsole console = new BlastConsole(commandProcessor,
                 in,
                 out,
@@ -63,6 +65,16 @@ public class BlastConsoleFactory implements ConsoleFactory {
         session.put("LINES", Integer.toString(terminal.getHeight()));
         session.put("COLUMNS", Integer.toString(terminal.getWidth()));
         session.put(".jline.terminal", terminal);
+        session.put("#LINES", new Function() {
+            public Object execute(CommandSession session, List<Object> arguments) throws Exception {
+                return Integer.toString(terminal.getHeight());
+            }
+        });
+        session.put("#COLUMNS", new Function() {
+            public Object execute(CommandSession session, List<Object> arguments) throws Exception {
+                return Integer.toString(terminal.getWidth());
+            }
+        });
         commandRegistry.registerCommandsInSession(session);
         return console;
     }

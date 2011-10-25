@@ -1,3 +1,10 @@
-1.) Split out the Spring-specific bits into submodules. Create helpful factory methods to create a Spring-specific one, vs. a manually-created one.
+1.) Split out the Spring-specific bits into submodules. Create helpful factory methods to create a Spring-specific one,
+vs. a manually-created one.
 2.) Look for places we can remove custom code that isn't necessary anymore
-3.) Bugs: some commands aren't working anymore.  "shell:threads", for example.  Tab-completion not working anywhere.
+3.) Bugs: some commands aren't working anymore.  The "session" local variable for AbstractAction doesn't seem to be
+    visible, even though it should be (??).
+    The "--help" option doesn't work for some commands. Anything regarding options doesn't work: passing them,
+    retrieving them...
+4.) Log a Karaf bug around the ArgumentCompleter (ArrayOutOfBoundsException if there are no ArgumentCompleters
+    registered...we got around this by making SimpleSpringBeanCommand an ArgumentCompleter.  That's how Karaf gets
+    around it too, with the base BlueprintCommand.

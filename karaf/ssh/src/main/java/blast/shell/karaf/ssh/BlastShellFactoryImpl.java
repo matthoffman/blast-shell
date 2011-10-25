@@ -23,12 +23,19 @@ import blast.shell.jline.ConsoleFactory;
 import jline.Terminal;
 import org.apache.felix.service.command.CommandSession;
 import org.apache.karaf.shell.console.jline.Console;
+import org.apache.karaf.shell.ssh.KarafJaasPasswordAuthenticator;
 import org.apache.karaf.shell.ssh.SshTerminal;
 import org.apache.sshd.common.Factory;
-import org.apache.sshd.server.*;
+import org.apache.sshd.server.Command;
+import org.apache.sshd.server.Environment;
+import org.apache.sshd.server.ExitCallback;
+import org.apache.sshd.server.SessionAware;
+import org.apache.sshd.server.session.ServerSession;
 import org.springframework.beans.factory.annotation.Required;
 
+import javax.security.auth.Subject;
 import java.io.*;
+import java.security.PrivilegedAction;
 import java.util.Map;
 
 /**
@@ -50,7 +57,7 @@ public class BlastShellFactoryImpl implements Factory<Command> {
         return new ShellImpl();
     }
 
-    public class ShellImpl implements Command {
+    public class ShellImpl implements Command, SessionAware {
         private InputStream in;
 
         private OutputStream out;
@@ -58,6 +65,8 @@ public class BlastShellFactoryImpl implements Factory<Command> {
         private OutputStream err;
 
         private ExitCallback callback;
+
+        private ServerSession session;
 
         private boolean closed;
 
@@ -75,6 +84,10 @@ public class BlastShellFactoryImpl implements Factory<Command> {
 
         public void setExitCallback(ExitCallback callback) {
             this.callback = callback;
+        }
+
+        public void setSession(ServerSession session) {
+            this.session = session;
         }
 
         public void start(final Environment env) throws IOException {
@@ -95,14 +108,28 @@ public class BlastShellFactoryImpl implements Factory<Command> {
                 for (Map.Entry<String, String> e : env.getEnv().entrySet()) {
                     session.put(e.getKey(), e.getValue());
                 }
-                env.addSignalListener(new SignalListener() {
-                    public void signal(Signal signal) {
-                        session.put("LINES", Integer.toString(terminal.getHeight()));
-                        session.put("COLUMNS", Integer.toString(terminal.getWidth()));
-                    }
-                }, Signal.WINCH);
-                new Thread(console).start();
 
+                new Thread(console) {
+                    @Override
+                    public void run() {
+                        //TODO: do we want this?
+                        Subject subject = ShellImpl.this.session != null ? ShellImpl.this.session.getAttribute(KarafJaasPasswordAuthenticator.SUBJECT_ATTRIBUTE_KEY) : null;
+                        if (subject != null) {
+                            Subject.doAs(subject, new PrivilegedAction<Object>() {
+                                public Object run() {
+                                    doRun();
+                                    return null;
+                                }
+                            });
+                        } else {
+                            doRun();
+                        }
+                    }
+
+                    protected void doRun() {
+                        super.run();
+                    }
+                }.start();
             } catch (Exception e) {
                 throw (IOException) new IOException("Unable to start shell").initCause(e);
             }
