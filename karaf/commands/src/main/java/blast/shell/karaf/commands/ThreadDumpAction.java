@@ -38,7 +38,7 @@ public class ThreadDumpAction extends AbstractAction {
             }
             returnString.append("**********************************************************************\n");
             if (!summary) {
-                returnString.append("Thread " + thread.toString()).append("\n");
+                returnString.append("Thread ").append(thread.toString());
             } else {
                 returnString.append(getThreadDisplayName(thread)).append("\n");
             }
@@ -46,27 +46,26 @@ public class ThreadDumpAction extends AbstractAction {
                 long userTimeMs = threadMXBean.getThreadUserTime(thread.getThreadId()) / 1000;// it's in nanos
                 long cpuTimeMs = threadMXBean.getThreadCpuTime(thread.getThreadId()) / 1000;  // it's in nanos
                 // i'm seriously considering pulling in JodaTime or Commons Lang for period formatting here:
-                returnString.append(" - user time: " + userTimeMs + "ms, system time: " + (cpuTimeMs - userTimeMs) + "ms").append("\n");
+                returnString.append(" - user time: ").append(userTimeMs).append("ms, system time: ").append(cpuTimeMs - userTimeMs).append("ms").append("\n");
             }
             if (summary) {
-                returnString.append(printLocksHeld(thread)).append("\n");
-                returnString.append(printLocksWaiting(thread)).append("\n");
+                returnString.append(printLocksHeld(thread));
+                returnString.append(printLocksWaiting(thread));
             }
             StringBuilder str = new StringBuilder(" - waiting " + thread.getWaitedCount() + " times");
             if (contentionMonitoringEnabled(threadMXBean)) {
-                str.append("for ").append(thread.getWaitedTime()).append("ms").append("\n");
+                str.append("for ").append(thread.getWaitedTime()).append("ms");
             }
             if (contentionMonitoringEnabled(threadMXBean)) {
-                returnString.append(" - blocked " + thread.getBlockedCount() + " times for " + thread.getBlockedTime() + "ms").append("\n");
+                returnString.append("\n").append(" - blocked ").append(thread.getBlockedCount()).append(" times for ")
+                        .append(thread.getBlockedTime()).append("ms");
             }
             returnString.append(str.toString()).append("\n");
-
             returnString.append("\n");
-
         }
         returnString.append("\n");
 
-        returnString.append(printDeadlockInfo(threadMXBean)).append("\n");
+        returnString.append(printDeadlockInfo(threadMXBean));
 
         return returnString.toString();
     }
@@ -103,7 +102,7 @@ public class ThreadDumpAction extends AbstractAction {
         if (thread.getLockedSynchronizers().length > 0) {
             returnString.append(" - currently locking:").append("\n");
             for (LockInfo lockInfo : thread.getLockedSynchronizers()) {
-                returnString.append("    - " + lockInfo.toString()).append("\n");
+                returnString.append("    - ").append(lockInfo.toString()).append("\n");
             }
         }
         return returnString.toString();
@@ -122,7 +121,7 @@ public class ThreadDumpAction extends AbstractAction {
             if (thread.getLockedMonitors() != null && thread.getLockedMonitors().length > 0) {
                 MonitorInfo[] monitorInfo = thread.getLockedMonitors();
                 for (MonitorInfo info : monitorInfo) {
-                    returnString.append(" - locked <" + info.getIdentityHashCode() + "> (a " + info.getClassName() + ")").append("\n");
+                    returnString.append(" - locked <").append(info.getIdentityHashCode()).append("> (a ").append(info.getClassName()).append(")").append("\n");
                 }
             }
         }
