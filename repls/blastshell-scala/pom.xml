@@ -3,29 +3,27 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <groupId>blast</groupId>
-        <artifactId>blast-shell</artifactId>
+        <artifactId>blast-shell-repls</artifactId>
         <version>0.5-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>blast-shell-sample</artifactId>
+    <artifactId>blast-shell-scala</artifactId>
+
     <build>
         <plugins>
             <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
-                <version>1.1.1</version>
+                <groupId>org.scala-tools</groupId>
+                <artifactId>maven-scala-plugin</artifactId>
+                <version>2.9.1</version>
                 <executions>
                     <execution>
                         <goals>
-                            <goal>java</goal>
+                            <goal>compile</goal>
+                            <goal>testCompile</goal>
                         </goals>
-                        <phase/>
                     </execution>
                 </executions>
-                <configuration>
-                    <mainClass>blast.shell.SampleSshApp</mainClass>
-                </configuration>
             </plugin>
         </plugins>
     </build>
@@ -33,33 +31,48 @@
     <dependencies>
         <dependency>
             <groupId>blast</groupId>
-            <artifactId>blast-shell-karaf-commands</artifactId>
+            <artifactId>blast-shell-core</artifactId>
             <version>${project.version}</version>
         </dependency>
 
         <dependency>
-            <groupId>blast</groupId>
-            <artifactId>blast-shell-karaf-ssh</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-
-        <!--
-        <dependency>
-            <groupId>blast</groupId>
-            <artifactId>blast-shell-beanshell</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        -->
-        <dependency>
-            <groupId>blast</groupId>
-            <artifactId>blast-shell-groovy</artifactId>
-            <version>${project.version}</version>
+            <groupId>org.scala-lang</groupId>
+            <artifactId>scala-compiler</artifactId>
+            <version>2.9.1</version>
         </dependency>
 
         <dependency>
-            <groupId>blast</groupId>
-            <artifactId>blast-shell-scala</artifactId>
-            <version>${project.version}</version>
+            <groupId>org.scala-lang</groupId>
+            <artifactId>scala-library</artifactId>
+            <version>2.9.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.scala-lang</groupId>
+            <artifactId>jline</artifactId>
+            <version>2.9.1</version>
+        </dependency>
+
+        <!--<dependency>-->
+            <!--<groupId>com.weiglewilczek.slf4s</groupId>-->
+            <!--<artifactId>slf4s</artifactId>-->
+            <!--<version>1.0.7</version>-->
+        <!--</dependency>-->
+
+        <dependency>
+            <groupId>org.apache.karaf.shell</groupId>
+            <artifactId>org.apache.karaf.shell.ssh</artifactId>
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.apache.karaf.shell</groupId>
+            <artifactId>org.apache.karaf.shell.commands</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.karaf.shell</groupId>
+            <artifactId>org.apache.karaf.shell.console</artifactId>
         </dependency>
 
 
@@ -99,12 +112,19 @@
             <artifactId>spring-test</artifactId>
         </dependency>
 
-
-        <!--<dependency>-->
-        <!--<groupId>org.apache.felix.gogo</groupId>-->
-        <!--<artifactId>org.apache.felix.gogo.commands</artifactId>-->
-        <!--</dependency>-->
+        <dependency>
+            <groupId>org.fusesource.jansi</groupId>
+            <artifactId>jansi</artifactId>
+        </dependency>
 
     </dependencies>
 
+    <repositories>
+        <repository>
+            <id>scala-tools</id>
+            <name>scala-tools releases</name>
+            <url>http://scala-tools.org/repo-releases</url>
+            <releases><enabled>true</enabled></releases>
+        </repository>
+    </repositories>
 </project>
