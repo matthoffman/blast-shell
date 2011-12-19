@@ -146,16 +146,4 @@
         </dependencies>
     </dependencyManagement>
 
-    <distributionManagement>
-        <repository>
-            <id>internal</id>
-            <name>internal repo</name>
-            <url>scp://archiva.quantumretail.com/export/archiva_repos/internal/</url>
-        </repository>
-        <snapshotRepository>
-            <id>snapshots</id>
-            <name>internal repo</name>
-            <url>scp://archiva.quantumretail.com/export/releases/snapshots/</url>
-        </snapshotRepository>
-    </distributionManagement>
 </project>                                     
