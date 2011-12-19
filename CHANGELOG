@@ -1,3 +1,11 @@
+0.5: Switching logging to slf4j instead of explicitly using log4j. Users can
+pick whichever library they want.  Internally, tests now use logback. 
+Updated to Spring 3.0.6
+Updated to Karaf 2.2.4
+Fixed a bug where it's creating a proxy around every action, which makes some
+commands fail (echo, each...).
+0.4: Fixed a problem in handling advised beans in CommandRegistry (thanks
+Jeff).
 0.3: Changed commands to always be prototypes, and changed around the SimpleSpringBeanCommand wrapper to instantiate a
 new one on every call.  That's what we want, really.
 Added a new ThreadDump command that has similar functionality to a kill -3.
