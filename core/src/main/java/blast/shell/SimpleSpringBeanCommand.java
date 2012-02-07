@@ -11,7 +11,7 @@ import java.util.List;
  *
  *
  */
-public class SimpleSpringBeanCommand extends AbstractCommand implements CompletableFunction {
+public class SimpleSpringBeanCommand extends AbstractCommand {
 
     ActionFactory actionFactory;
     String beanName;
@@ -28,6 +28,7 @@ public class SimpleSpringBeanCommand extends AbstractCommand implements Completa
         return actionFactory.getAction(beanName);
     }
 
+    /*
     @Override
     public List<Completer> getCompleters() {
         return completers;
@@ -36,4 +37,5 @@ public class SimpleSpringBeanCommand extends AbstractCommand implements Completa
     public void setCompleters(List<Completer> completers) {
         this.completers = completers;
     }
+    */
 }
