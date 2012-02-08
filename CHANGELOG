@@ -1,3 +1,4 @@
+0.9: Updating to Spring 3.1.0.RELEASE
 0.8: Groovy REPL improvements: uses new Groovysh 
 0.7: Scala REPL
 0.6: Fix a bug where completers declared with @CompleterValues no longer work
