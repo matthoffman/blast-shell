@@ -1,3 +1,6 @@
+0.8: 
+0.7: Scala REPL
+0.6: Fix a bug where completers declared with @CompleterValues no longer work
 0.5: Switching logging to slf4j instead of explicitly using log4j. Users can
 pick whichever library they want.  Internally, tests now use logback. 
 Updated to Spring 3.0.6
