@@ -3,7 +3,7 @@
     <parent>
         <groupId>blast</groupId>
         <artifactId>blast-shell</artifactId>
-        <version>0.5-SNAPSHOT</version>
+        <version>0.8-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -11,9 +11,10 @@
     <packaging>pom</packaging>
     <description>A variety of REPL (read-eval-print-loop) shells in various languages.</description>
 
-    <modules> 
-      <module>blastshell-groovy</module>
-      <!--<module>blastshell-beanshell</module>-->
+    <modules>
+        <module>blastshell-groovy</module>
+        <module>blastshell-scala</module>
+        <!--<module>blastshell-beanshell</module>-->
     </modules>
 
 </project>
