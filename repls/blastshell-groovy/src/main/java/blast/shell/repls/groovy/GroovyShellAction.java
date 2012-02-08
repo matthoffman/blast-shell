@@ -1,5 +1,6 @@
 package blast.shell.repls.groovy;
 
+import blast.shell.jline.BackspaceWrappingInputStream;
 import groovy.lang.Binding;
 import jline.Terminal;
 import org.apache.felix.gogo.commands.Command;
@@ -10,6 +11,9 @@ import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.BeanFactoryAware;
 import org.springframework.beans.factory.ListableBeanFactory;
 
+import java.io.IOException;
+import java.io.PrintStream;
+import java.io.InputStream;
 import java.util.Map;
 
 /**
@@ -45,8 +49,7 @@ public class GroovyShellAction extends AbstractAction implements BeanFactoryAwar
                 }
             }
         }
-//        final InteractiveShellRunner groovy = new InteractiveShellRunner(binding, in, out, err);
-        IO io = new IO(session.getKeyboard(), session.getConsole(), session.getConsole());
+        IO io = new IO(new BackspaceWrappingInputStream(session.getKeyboard()), session.getConsole(), session.getConsole());
         final Groovysh groovy = new Groovysh(binding, io);
 
         session.getConsole().println("Entering a Groovy shell.  Commands can span multiple lines; type 'go' to execute the lines currently" +
@@ -78,4 +81,5 @@ public class GroovyShellAction extends AbstractAction implements BeanFactoryAwar
     public void setBindings(final Map<String, Object> bindings) {
         this.bindings = bindings;
     }
+
 }

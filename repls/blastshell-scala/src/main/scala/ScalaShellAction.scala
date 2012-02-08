@@ -8,6 +8,7 @@ import tools.nsc.interpreter._
 import tools.nsc.interpreter.Completion.{Candidates, ScalaCompleter}
 import org.springframework.beans.factory.{ListableBeanFactory, BeanFactory, BeanFactoryAware}
 import tools.jline.console.Key
+import blast.shell.jline.BackspaceWrappingInputStream
 
 /**
  * Start a Scala console within your shell session. All Spring beans are bound in scope.
@@ -115,21 +116,4 @@ class ScalaShellAction extends AbstractAction with BeanFactoryAware {
     beanFactory = bf
   }
 
-
-}
-
-/**
- * When embedded inside an SSH session, the Scala shell doesn't know how to handle backspaces.
- * So we'll wrap them here.
- * There very well may be a better/more elegant/more correct way to do this, but I haven't found it yet.
- * @param inputStream
- */
-class BackspaceWrappingInputStream(val inputStream: InputStream) extends InputStream {
-  def read() = {
-    var c = inputStream.read();
-    if (Key.valueOf(c) == Key.DELETE) {
-      c = Key.BACKSPACE.code;
-    }
-    c
-  }
 }

@@ -1,7 +1,5 @@
 package blast.shell.repls.groovy
 
-import blast.shell.repls.groovy.Groovysh
-import blast.shell.repls.groovy.InteractiveShellRunner
 import jline.Terminal
 import jline.console.history.FileHistory
 import jline.console.history.History
