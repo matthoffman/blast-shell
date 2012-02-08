@@ -7,10 +7,13 @@ import tools.jline.console.completer.Completer
 import tools.nsc.interpreter._
 import tools.nsc.interpreter.Completion.{Candidates, ScalaCompleter}
 import org.springframework.beans.factory.{ListableBeanFactory, BeanFactory, BeanFactoryAware}
+import tools.jline.console.Key
 
 /**
+ * Start a Scala console within your shell session. All Spring beans are bound in scope.
  *
- *
+ * Includes some code from peak6 SSH shell: https://github.com/peak6/scala-ssh-shell
+ * Many thanks to Scott R. Parish!
  */
 @Command(scope = "repl", name = "scala", description = "Starts a Scala shell")
 class ScalaShellAction extends AbstractAction with BeanFactoryAware {
@@ -44,7 +47,7 @@ class ScalaShellAction extends AbstractAction with BeanFactoryAware {
 
   override def doExecute(): Object = {
     val out = session.getConsole
-    val in = session.getKeyboard
+    val in = new BackspaceWrappingInputStream(session.getKeyboard)
     val pw = new PrintWriter(out)
     pw.write("Connected to %s, starting repl...\n".format(name))
     pw.flush()
@@ -58,6 +61,7 @@ class ScalaShellAction extends AbstractAction with BeanFactoryAware {
       getClass.getClassLoader)
     il.settings.usejavacp.value = true
     il.createInterpreter()
+
 
     il.in = new scala.tools.nsc.interpreter.JLineIOReader(
       in,
@@ -112,4 +116,20 @@ class ScalaShellAction extends AbstractAction with BeanFactoryAware {
   }
 
 
+}
+
+/**
+ * When embedded inside an SSH session, the Scala shell doesn't know how to handle backspaces.
+ * So we'll wrap them here.
+ * There very well may be a better/more elegant/more correct way to do this, but I haven't found it yet.
+ * @param inputStream
+ */
+class BackspaceWrappingInputStream(val inputStream: InputStream) extends InputStream {
+  def read() = {
+    var c = inputStream.read();
+    if (Key.valueOf(c) == Key.DELETE) {
+      c = Key.BACKSPACE.code;
+    }
+    c
+  }
 }

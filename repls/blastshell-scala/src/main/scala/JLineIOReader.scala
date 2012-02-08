@@ -14,6 +14,10 @@ import io.Streamable.slurp
 
 /**
  *  Reads from the console using JLine.
+ *
+ * From peak6 SSH shell: https://github.com/peak6/scala-ssh-shell
+ * Many thanks to Scott R. Parish!
+ *
  */
 class JLineIOReader(in: java.io.InputStream,
                     out: java.io.OutputStream,

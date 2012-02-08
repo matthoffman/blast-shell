@@ -4,7 +4,7 @@
     <parent>
         <groupId>blast</groupId>
         <artifactId>blast-shell-repls</artifactId>
-        <version>0.5-SNAPSHOT</version>
+        <version>0.7-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 

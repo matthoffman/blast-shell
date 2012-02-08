@@ -7,6 +7,9 @@ package scala.tools.nsc.interpreter
 
 /*
  * ILoop.loop(), but allow external exit
+ *
+ * From peak6 SSH shell: https://github.com/peak6/scala-ssh-shell
+ * Many thanks to Scott R. Parish!
  */
 class SshILoop(in0: Option[java.io.BufferedReader], out: JPrintWriter)
         extends scala.tools.nsc.interpreter.ILoop(in0, out) {
