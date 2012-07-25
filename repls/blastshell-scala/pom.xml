@@ -35,6 +35,12 @@
         </dependency>
 
         <dependency>
+            <groupId>blast</groupId>
+            <artifactId>blast-shell-repls-common</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
             <groupId>org.scala-lang</groupId>
             <artifactId>scala-compiler</artifactId>
             <version>2.9.1</version>
