@@ -14,6 +14,7 @@
     <modules>
         <module>blastshell-groovy</module>
         <module>blastshell-scala</module>
+        <module>blastshell-common</module>
         <!--<module>blastshell-beanshell</module>-->
     </modules>
 
