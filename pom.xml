@@ -5,7 +5,7 @@
     <groupId>blast</groupId>
     <artifactId>blast-shell</artifactId>
     <packaging>pom</packaging>
-    <version>0.10-SNAPSHOT</version>
+    <version>0.10</version>
 
     <scm>
         <connection>scm:git:git@github.com:matthoffman/blast-shell.git</connection>
@@ -146,5 +146,14 @@
 
         </dependencies>
     </dependencyManagement>
-
+<distributionManagement>
+        <repository>
+            <id>internal</id>
+            <url>scp://archiva.quantumretail.com/export/archiva_repos/internal/</url>
+        </repository>
+        <snapshotRepository>
+            <id>snapshots</id>
+            <url>scp://archiva.quantumretail.com/export/releases/snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
 </project>                                     
