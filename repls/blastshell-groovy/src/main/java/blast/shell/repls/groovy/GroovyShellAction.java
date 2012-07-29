@@ -1,19 +1,18 @@
 package blast.shell.repls.groovy;
 
 import blast.shell.jline.BackspaceWrappingInputStream;
+import blast.shell.repls.BeanSelector;
 import groovy.lang.Binding;
 import jline.Terminal;
 import org.apache.felix.gogo.commands.Command;
 import org.apache.karaf.shell.console.AbstractAction;
 import org.codehaus.groovy.tools.shell.IO;
+import org.springframework.aop.support.AopUtils;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.BeanFactoryAware;
 import org.springframework.beans.factory.ListableBeanFactory;
 
-import java.io.IOException;
-import java.io.PrintStream;
-import java.io.InputStream;
 import java.util.Map;
 
 /**
@@ -26,6 +25,8 @@ public class GroovyShellAction extends AbstractAction implements BeanFactoryAwar
     BeanFactory beanFactory;
 
     private Map<String, Object> bindings;
+
+    private BeanSelector beanSelector;
 
     @Override
     protected Object doExecute() throws Exception {
@@ -41,21 +42,23 @@ public class GroovyShellAction extends AbstractAction implements BeanFactoryAwar
         binding.setVariable("applicationContext", beanFactory);
         if (beanFactory instanceof ListableBeanFactory) {
             String[] beanNames = ((ListableBeanFactory) beanFactory).getBeanDefinitionNames();
-            for (String beanName : beanNames) {
-                try {
-                    binding.setVariable(beanName, beanFactory.getBean(beanName));
-                } catch (Throwable t) {
-                    log.debug("Problem filling Groovy Shell bindings; this is non-terminal: ", t);
+            if (beanSelector != null) {
+                for (String beanName : beanNames) {
+                    try {
+                        Object bean = beanFactory.getBean(beanName);
+                        if (beanSelector.filter(beanName, AopUtils.getTargetClass(bean), bean)) {
+                            binding.setVariable(beanName, bean);
+                        }
+                    } catch (Throwable t) {
+                        log.debug("Problem filling Groovy Shell bindings; this is non-terminal: ", t);
+                    }
                 }
             }
         }
         IO io = new IO(new BackspaceWrappingInputStream(session.getKeyboard()), session.getConsole(), session.getConsole());
         final Groovysh groovy = new Groovysh(binding, io);
 
-        session.getConsole().println("Entering a Groovy shell.  Commands can span multiple lines; type 'go' to execute the lines currently" +
-                " in the buffer. Type 'binding' to see the available variables (which are all Spring beans in the system).\n" +
-                "\u001B[1mWarning!  You can directly modify and seriously compromise the running system using this shell!\u001B[0m" +
-                "\n\n");
+        session.getConsole().println(getMessage());
         // This makes the Groovy shell lavender. Not sure I'm a huge fan of that, but I like it being a different color.
         // Perhaps a light gray?
         session.getConsole().println("\u001B[36m");
@@ -73,6 +76,14 @@ public class GroovyShellAction extends AbstractAction implements BeanFactoryAwar
         return null;
     }
 
+    protected String getMessage() {
+        return "Entering a Groovy shell.  Commands can span multiple lines; type 'go' to execute the lines currently" +
+                " in the buffer. Type 'binding.getVariables()' to see the available variables.\n" +
+                "\u001B[1mWarning!  You can directly modify and seriously compromise the running system using this shell!\u001B[0m" +
+                "\n\n";
+    }
+
+
     @Override
     public void setBeanFactory(BeanFactory beanFactory) throws BeansException {
         this.beanFactory = beanFactory;
@@ -82,4 +93,7 @@ public class GroovyShellAction extends AbstractAction implements BeanFactoryAwar
         this.bindings = bindings;
     }
 
+    public void setBeanSelector(BeanSelector beanSelector) {
+        this.beanSelector = beanSelector;
+    }
 }
