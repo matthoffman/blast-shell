@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>blast</groupId>
@@ -60,13 +61,13 @@
 
     <properties>
         <spring.version>3.1.0.RELEASE</spring.version>
-        <sshd.version>0.6.0</sshd.version>
+        <sshd.version>0.7.0</sshd.version>
         <!-- we can't use gogo 0.6.1 yet because Karaf doesn't yet have a release that supports it. -->
         <!--<felix.gogo.version>0.6.1</felix.gogo.version>-->
         <!-- turns out, we can't use gogo 0.4.0 either: this version of Karaf embeds its own version instead. -->
         <!--<felix.gogo.version>0.4.0</felix.gogo.version>-->
-        <karaf.version>2.2.7</karaf.version>
-        <jansi.version>1.5</jansi.version>
+        <karaf.version>2.2.8</karaf.version>
+        <jansi.version>1.9</jansi.version>
         <slf4j.version>1.6.1</slf4j.version>
     </properties>
 
@@ -154,14 +155,4 @@
 
         </dependencies>
     </dependencyManagement>
-<distributionManagement>
-        <repository>
-            <id>internal</id>
-            <url>scp://archiva.quantumretail.com/export/archiva_repos/internal/</url>
-        </repository>
-        <snapshotRepository>
-            <id>snapshots</id>
-            <url>scp://archiva.quantumretail.com/export/releases/snapshots/</url>
-        </snapshotRepository>
-    </distributionManagement>
 </project>                                     

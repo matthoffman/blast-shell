@@ -33,6 +33,7 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 /**
@@ -75,6 +76,7 @@ public class BlastConsoleFactory implements ConsoleFactory {
                 return Integer.toString(terminal.getWidth());
             }
         });
+        addSystemProperties(session);
         commandRegistry.registerCommandsInSession(session);
         return console;
     }
@@ -133,5 +135,13 @@ public class BlastConsoleFactory implements ConsoleFactory {
         // failed... no welcome message for you.
         return new Properties();
     }
+
+    private void addSystemProperties(CommandSession session) {
+        Properties sysProps = System.getProperties();
+        for (Map.Entry<Object, Object> entry : sysProps.entrySet()) {
+            session.put((String) entry.getKey(), entry.getValue());
+        }
+    }
+
 }
 
