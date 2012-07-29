@@ -44,7 +44,7 @@ implements Runnable {
 
     this.prompt = prompt
 
-    this.reader = new ConsoleReader(shell.io.inputStream, new PrintWriter(shell.io.outputStream, true))
+    this.reader = new ConsoleReader(shell.io.inputStream, shell.io.outputStream)
 
     reader.addCompleter(new ReflectionCompleter(shell))
     this.completor = new CommandsMultiCompletor()
