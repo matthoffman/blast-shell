@@ -10,6 +10,33 @@
     <artifactId>blast-shell-groovy</artifactId>
 
     <build>
+        <resources>
+            <resource>
+                <directory>${pom.basedir}/src/main/resources</directory>
+                <includes>
+                    <include>**/*</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>${pom.basedir}/src/main/groovy</directory>
+                <includes>
+                    <include>**/*</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>${pom.basedir}/src/main/java</directory>
+                <includes>
+                    <include>**/*</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>${pom.basedir}/src/main/filtered-resources</directory>
+                <filtering>true</filtering>
+                <includes>
+                    <include>**/*</include>
+                </includes>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <groupId>org.codehaus.gmaven</groupId>
@@ -49,7 +76,7 @@
         <dependency>
             <groupId>org.codehaus.groovy</groupId>
             <artifactId>groovy-all</artifactId>
-            <version>1.8.5</version>
+            <version>1.8.7</version>
         </dependency>
 
         <dependency>

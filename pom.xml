@@ -22,6 +22,12 @@
                 </includes>
             </resource>
             <resource>
+                <directory>${pom.basedir}/src/main/java</directory>
+                <includes>
+                    <include>**/*</include>
+                </includes>
+            </resource>
+            <resource>
                 <directory>${pom.basedir}/src/main/filtered-resources</directory>
                 <filtering>true</filtering>
                 <includes>

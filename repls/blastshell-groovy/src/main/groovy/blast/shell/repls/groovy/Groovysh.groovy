@@ -11,6 +11,7 @@ import org.fusesource.jansi.Ansi
 import org.fusesource.jansi.AnsiConsole
 import org.fusesource.jansi.AnsiRenderer
 import org.codehaus.groovy.tools.shell.*
+import org.springframework.core.io.ClassPathResource
 
 /**
  * An interactive shell for evaluating Groovy code from the command-line (aka. groovysh).
@@ -62,7 +63,7 @@ class Groovysh extends Shell {
   private static Closure createDefaultRegistrar() {
     return { shell ->
       def r = new XmlCommandRegistrar(shell, classLoader)
-      def url = getClass().getResource('commands.xml')
+      def url = new ClassPathResource('commands.xml').getURL()
       r.register(url)
     }
   }
