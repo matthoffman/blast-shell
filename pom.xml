@@ -37,7 +37,7 @@
         <plugins>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.3.2</version>
+                <version>3.0</version>
                 <configuration>
                     <source>1.6</source>
                     <target>1.6</target>
@@ -45,14 +45,14 @@
             </plugin>
             <plugin>
                 <artifactId>maven-release-plugin</artifactId>
-                <version>2.1</version>
+                <version>2.4.1</version>
             </plugin>
         </plugins>
         <extensions>
             <extension>
                 <groupId>org.apache.maven.wagon</groupId>
                 <artifactId>wagon-ssh</artifactId>
-                <version>1.0-beta-7</version>
+                <version>2.4</version>
             </extension>
         </extensions>
 
@@ -65,15 +65,15 @@
     </modules>
 
     <properties>
-        <spring.version>3.1.0.RELEASE</spring.version>
-        <sshd.version>0.7.0</sshd.version>
+        <spring.version>3.2.2.RELEASE</spring.version>
+        <sshd.version>0.8.0</sshd.version>
         <!-- we can't use gogo 0.6.1 yet because Karaf doesn't yet have a release that supports it. -->
         <!--<felix.gogo.version>0.6.1</felix.gogo.version>-->
         <!-- turns out, we can't use gogo 0.4.0 either: this version of Karaf embeds its own version instead. -->
         <!--<felix.gogo.version>0.4.0</felix.gogo.version>-->
-        <karaf.version>2.2.8</karaf.version>
-        <jansi.version>1.9</jansi.version>
-        <slf4j.version>1.6.1</slf4j.version>
+        <karaf.version>2.2.9</karaf.version>
+        <jansi.version>1.10</jansi.version>
+        <slf4j.version>1.7.2</slf4j.version>
     </properties>
 
     <dependencyManagement>
@@ -82,7 +82,7 @@
             <dependency>
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>
-                <version>4.8.2</version>
+                <version>4.11</version>
                 <scope>test</scope>
             </dependency>
 
@@ -96,7 +96,7 @@
             <dependency>
                 <groupId>ch.qos.logback</groupId>
                 <artifactId>logback-classic</artifactId>
-                <version>[,1.0.0)</version>
+                <version>1.0.11</version>
                 <optional>true</optional>
             </dependency>
 
