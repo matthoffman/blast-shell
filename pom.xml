@@ -4,13 +4,34 @@
 
     <groupId>blast</groupId>
     <artifactId>blast-shell</artifactId>
-    <packaging>pom</packaging>
     <version>0.13-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <name>Blast Shell</name>
+    <description>Apache Karaf's shell adapted for non-OSGi use</description>
+    <url>http://github.com/matthoffman/blast-shell</url>
+
+    <developers>
+        <developer>
+            <id>matthoffman</id>
+            <name>Matt Hoffman</name>
+            <email>matt@mhoffman.org</email>
+        </developer>
+    </developers>
 
     <scm>
         <connection>scm:git:git@github.com:matthoffman/blast-shell.git</connection>
         <developerConnection>scm:git:git@github.com:matthoffman/blast-shell.git</developerConnection>
+        <url>git@github.com:matthoffman/blast-shell.git</url>
     </scm>
+ 
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
 
     <build>
         <resources>
