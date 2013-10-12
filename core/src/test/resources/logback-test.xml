@@ -16,7 +16,7 @@
         <level value="DEBUG"/>
     </logger>
 
-    <!-- Quiet down some chatty dependencies -->
+    <!-- Quiet down some chatty dependencies --,>
     <logger name="org.springframework">
         <level value="WARN"/>
     </logger>
