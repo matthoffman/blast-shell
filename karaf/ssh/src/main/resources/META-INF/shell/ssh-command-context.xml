@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:cm="http://www.springframework.org/schema/context" xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:util="http://www.springframework.org/schema/util"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
-       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+
        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.5.xsd">
 
     <bean name="sshPropertyPlaceholderConfigurer"
@@ -23,6 +23,7 @@
     <bean id="sshClient" class="org.apache.sshd.SshClient" factory-method="setUpDefaultClient" scope="prototype">
     </bean>
 
+
     <bean id="sshServer" class="org.apache.sshd.SshServer" factory-method="setUpDefaultServer" scope="prototype">
         <property name="port" value="${sshPort}"/>
         <property name="shellFactory">
@@ -37,6 +38,7 @@
         </property>
         <property name="keyPairProvider" ref="keyPairProvider"/>
         <property name="passwordAuthenticator" ref="passwordAuthenticator"/>
+        <property name="publickeyAuthenticator" ref="publicKeyAuthenticator"/>
     </bean>
 
     <bean name="keyPairProvider" class="org.apache.sshd.server.keyprovider.SimpleGeneratorHostKeyProvider">
@@ -55,6 +57,13 @@
         <constructor-arg index="0">
             <util:properties location="classpath:ssh.passwd"/>
         </constructor-arg>
+    </bean>
+
+    <!-- this will authenticate via public key, using an authorized_keys file much like OpenSSH -->
+    <bean id="publicKeyAuthenticator" class="org.apache.karaf.shell.ssh.KarafPublickeyAuthenticator"
+          init-method="startTimer" destroy-method="stopTimer">
+        <property name="authorizedKeys" value="${authorizedKeys}"/>
+        <property name="active" value="true"/>
     </bean>
 
     <bean id="sshServerFactory" class="org.apache.karaf.shell.ssh.SshServerFactory" init-method="start"
