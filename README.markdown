@@ -1,6 +1,9 @@
 Purpose
 -------
 
+Note: this is now quite obsolete; Karaf 3.x and 4.x need much less wrapping than 2.x did. If folks are interested, I can 
+update this to a recent Karaf for demonstration.
+
 This is a project to adapt the [Apache Karaf][karaf] [shell][karaf-shell] to non-OSGi, Spring-based* projects.
 It is designed to be easily integrated into existing projects, providing either SSH access to a running application, 
 or a direct console. Currently, my emphasis is to embed in server applications to allow SSH access, but it works as a

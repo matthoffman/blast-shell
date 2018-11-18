@@ -86,7 +86,7 @@
     </modules>
 
     <properties>
-        <spring.version>3.2.2.RELEASE</spring.version>
+        <spring.version>3.2.18.RELEASE</spring.version>
         <sshd.version>0.8.0</sshd.version>
         <!-- we can't use gogo 0.6.1 yet because Karaf doesn't yet have a release that supports it. -->
         <!--<felix.gogo.version>0.6.1</felix.gogo.version>-->
